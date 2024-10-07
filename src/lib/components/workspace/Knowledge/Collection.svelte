@@ -595,23 +595,44 @@
 	}}
 />
 
-<div class="flex flex-col w-full h-full max-h-[100dvh]" id="collection-container">
-	{#if id && knowledge}
-		<div class="flex flex-row flex-1 h-full max-h-full pb-2.5">
-			<PaneGroup direction="horizontal">
-				<Pane
-					bind:pane
-					defaultSize={minSize}
-					collapsible={true}
-					maxSize={50}
-					{minSize}
-					class="h-full"
-					onExpand={() => {
-						showSidepanel = true;
-					}}
-					onCollapse={() => {
-						showSidepanel = false;
-					}}
+<div class="flex flex-col w-full max-h-[100dvh] h-full">
+	<div class="flex items-center justify-between">
+		<button
+			class="flex space-x-1 w-fit"
+			on:click={() => {
+				goto('/workspace/knowledge');
+			}}
+		>
+			<div class=" self-center">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+					class="w-4 h-4"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			</div>
+			<div class=" self-center font-medium text-sm">{$i18n.t('Back')}</div>
+		</button>
+
+		<div class=" flex-shrink-0">
+			<div>
+				<Badge type="success" content="Collection" />
+			</div>
+		</div>
+	</div>
+	<div class="flex flex-col my-2 flex-1 overflow-auto h-0">
+		{#if id && knowledge}
+			<div class="flex flex-row h-0 flex-1 overflow-auto">
+				<div
+					class=" {largeScreen
+						? 'flex-shrink-0'
+						: 'flex-1'} flex py-2.5 w-80 rounded-2xl border border-gray-50 dark:border-gray-850"
 				>
 					<div
 						class="{largeScreen ? 'flex-shrink-0' : 'flex-1'}
@@ -689,6 +710,26 @@
 									<div class="m-auto text-gray-500 text-xs">{$i18n.t('No content found')}</div>
 								{/if}
 							</div>
+
+							{#if filteredItems.length > 0}
+								<div class=" flex overflow-y-auto h-full w-full scrollbar-hidden text-xs">
+									<Files
+										files={filteredItems}
+										{selectedFileId}
+										on:click={(e) => {
+											selectedFileId = selectedFileId === e.detail ? null : e.detail;
+										}}
+										on:delete={(e) => {
+											console.log(e.detail);
+
+											selectedFileId = null;
+											deleteFileHandler(e.detail);
+										}}
+									/>
+								</div>
+							{:else}
+								<div class="m-auto text-gray-500 text-xs">No content found</div>
+							{/if}
 						</div>
 					</div>
 				</Pane>
@@ -839,8 +880,44 @@
 									{/key}
 								</div>
 							</div>
-						</div>
-					</Drawer>
+						{:else}
+							<div class="m-auto pb-24">
+								<div>
+									<div class=" flex w-full mt-1 mb-3.5">
+										<div class="flex-1">
+											<div class="flex items-center justify-between w-full px-0.5 mb-1">
+												<div class="w-full">
+													<input
+														type="text"
+														class="text-center w-full font-medium text-3xl font-primary bg-transparent outline-none"
+														bind:value={knowledge.name}
+														on:input={() => {
+															changeDebounceHandler();
+														}}
+													/>
+												</div>
+											</div>
+
+											<div class="flex w-full px-1">
+												<input
+													type="text"
+													class="text-center w-full text-gray-500 bg-transparent outline-none"
+													bind:value={knowledge.description}
+													on:input={() => {
+														changeDebounceHandler();
+													}}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class=" mt-2 text-center text-sm dark:text-gray-700 w-full">
+									Select a file to view or drag and drop a file to upload
+								</div>
+							</div>
+						{/if}
+					</div>
 				{/if}
 			</PaneGroup>
 		</div>
