@@ -18,8 +18,8 @@
 
 <div class={className}>
 	{#if title !== null}
-		<button class={buttonClassName} on:click={() => (open = !open)}>
-			<div class=" w-fit font-medium transition flex items-center justify-between gap-2">
+		<button class="w-full" on:click={() => (open = !open)}>
+			<div class=" w-full font-medium transition flex items-center justify-between gap-2">
 				<div>
 					{title}
 				</div>
