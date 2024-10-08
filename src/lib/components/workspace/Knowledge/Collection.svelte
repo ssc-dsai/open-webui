@@ -634,40 +634,46 @@
 						? 'flex-shrink-0'
 						: 'flex-1'} flex py-2.5 w-80 rounded-2xl border border-gray-50 dark:border-gray-850"
 				>
-					<div
-						class="{largeScreen ? 'flex-shrink-0' : 'flex-1'}
-						flex
-						py-2
-						rounded-2xl
-						border
-						border-gray-50
-						h-full
-						dark:border-gray-850"
-					>
-						<div class=" flex flex-col w-full space-x-2 rounded-lg h-full">
-							<div class="w-full h-full flex flex-col">
-								<div class=" px-3">
-									<div class="flex py-1">
-										<div class=" self-center ml-1 mr-3">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 20 20"
-												fill="currentColor"
-												class="w-4 h-4"
-											>
-												<path
-													fill-rule="evenodd"
-													d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-													clip-rule="evenodd"
-												/>
-											</svg>
-										</div>
-										<input
-											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
-											bind:value={query}
-											placeholder={$i18n.t('Search Collection')}
-											on:focus={() => {
-												selectedFileId = null;
+					<div class=" flex flex-col w-full space-x-2 rounded-lg h-full">
+						<div class="w-full h-full flex flex-col">
+							<div class=" px-3">
+								<div class="flex">
+									<div class=" self-center ml-1 mr-3">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 20 20"
+											fill="currentColor"
+											class="w-4 h-4"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+									</div>
+									<input
+										class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
+										bind:value={query}
+										placeholder={$i18n.t('Search Collection')}
+										on:focus={() => {
+											selectedFileId = null;
+										}}
+									/>
+
+									<div>
+										<AddContentMenu
+											on:upload={(e) => {
+												if (e.detail.type === 'directory') {
+													uploadDirectoryHandler();
+												} else if (e.detail.type === 'text') {
+													showAddTextContentModal = true;
+												} else {
+													document.getElementById('files-input').click();
+												}
+											}}
+											on:sync={(e) => {
+												showSyncConfirmModal = true;
 											}}
 										/>
 
