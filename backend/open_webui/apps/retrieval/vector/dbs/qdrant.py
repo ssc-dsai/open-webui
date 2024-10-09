@@ -18,6 +18,8 @@ from open_webui.config import (
     QDRANT_URL,
 )
 
+NO_LIMIT = 999999999
+
 class QdrantClient:
     def __init__(self):
         self.client = Client(
