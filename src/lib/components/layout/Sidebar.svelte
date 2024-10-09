@@ -409,6 +409,18 @@
         "
 	data-state={$showSidebar}
 >
+	{#if dragged}
+		<div
+			class="absolute w-full h-full max-h-full backdrop-blur bg-gray-800/40 flex justify-center z-[999] touch-none pointer-events-none"
+		>
+			<div class="m-auto pt-64 flex flex-col justify-center">
+				<AddFilesPlaceholder
+					title={$i18n.t('Drop Chat Export')}
+					content={$i18n.t('Drop a chat export file here to import it.')}
+				/>
+			</div>
+		</div>
+	{/if}
 	<div
 		class="py-2 my-auto flex flex-col justify-between h-screen max-h-[100dvh] w-[260px] overflow-x-hidden z-50 {$showSidebar
 			? ''
