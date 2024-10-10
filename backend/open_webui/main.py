@@ -903,15 +903,15 @@ def get_sorted_filters(model_id, models):
         model
         for model in models.values()
         if "pipeline" in model
-        and "type" in model["pipeline"]
-        and model["pipeline"]["type"] == "filter"
-        and (
-            model["pipeline"]["pipelines"] == ["*"]
-            or any(
-                model_id == target_model_id
-                for target_model_id in model["pipeline"]["pipelines"]
-            )
-        )
+           and "type" in model["pipeline"]
+           and model["pipeline"]["type"] == "filter"
+           and (
+                   model["pipeline"]["pipelines"] == ["*"]
+                   or any(
+               model_id == target_model_id
+               for target_model_id in model["pipeline"]["pipelines"]
+           )
+           )
     ]
     sorted_filters = sorted(filters, key=lambda x: x["pipeline"]["priority"])
     return sorted_filters
@@ -1100,8 +1100,8 @@ async def update_embedding_function(request: Request, call_next):
 @app.middleware("http")
 async def inspect_websocket(request: Request, call_next):
     if (
-        "/ws/socket.io" in request.url.path
-        and request.query_params.get("transport") == "websocket"
+            "/ws/socket.io" in request.url.path
+            and request.query_params.get("transport") == "websocket"
     ):
         upgrade = (request.headers.get("Upgrade") or "").lower()
         connection = (request.headers.get("Connection") or "").lower().split(",")
@@ -1182,8 +1182,8 @@ async def get_all_models():
         if custom_model.base_model_id is None:
             for model in models:
                 if (
-                    custom_model.id == model["id"]
-                    or custom_model.id == model["id"].split(":")[0]
+                        custom_model.id == model["id"]
+                        or custom_model.id == model["id"].split(":")[0]
                 ):
                     if custom_model.is_active:
                         model["name"] = custom_model.name
@@ -1208,8 +1208,8 @@ async def get_all_models():
 
             for model in models:
                 if (
-                    custom_model.base_model_id == model["id"]
-                    or custom_model.base_model_id == model["id"].split(":")[0]
+                        custom_model.base_model_id == model["id"]
+                        or custom_model.base_model_id == model["id"].split(":")[0]
                 ):
                     owned_by = model["owned_by"]
                     if "pipe" in model:
@@ -2245,7 +2245,7 @@ async def get_pipelines_list(user=Depends(get_admin_user)):
 
 @app.post("/api/pipelines/upload")
 async def upload_pipeline(
-    urlIdx: int = Form(...), file: UploadFile = File(...), user=Depends(get_admin_user)
+        urlIdx: int = Form(...), file: UploadFile = File(...), user=Depends(get_admin_user)
 ):
     print("upload_pipeline", urlIdx, file.filename)
     # Check if the uploaded file is a python file
@@ -2422,9 +2422,9 @@ async def get_pipelines(urlIdx: Optional[int] = None, user=Depends(get_admin_use
 
 @app.get("/api/pipelines/{pipeline_id}/valves")
 async def get_pipeline_valves(
-    urlIdx: Optional[int],
-    pipeline_id: str,
-    user=Depends(get_admin_user),
+        urlIdx: Optional[int],
+        pipeline_id: str,
+        user=Depends(get_admin_user),
 ):
     r = None
     try:
@@ -2460,9 +2460,9 @@ async def get_pipeline_valves(
 
 @app.get("/api/pipelines/{pipeline_id}/valves/spec")
 async def get_pipeline_valves_spec(
-    urlIdx: Optional[int],
-    pipeline_id: str,
-    user=Depends(get_admin_user),
+        urlIdx: Optional[int],
+        pipeline_id: str,
+        user=Depends(get_admin_user),
 ):
     r = None
     try:
@@ -2497,10 +2497,10 @@ async def get_pipeline_valves_spec(
 
 @app.post("/api/pipelines/{pipeline_id}/valves/update")
 async def update_pipeline_valves(
-    urlIdx: Optional[int],
-    pipeline_id: str,
-    form_data: dict,
-    user=Depends(get_admin_user),
+        urlIdx: Optional[int],
+        pipeline_id: str,
+        form_data: dict,
+        user=Depends(get_admin_user),
 ):
     r = None
     try:
@@ -2668,7 +2668,7 @@ async def get_app_latest_release_version():
         timeout = aiohttp.ClientTimeout(total=1)
         async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
             async with session.get(
-                "https://api.github.com/repos/open-webui/open-webui/releases/latest"
+                    "https://api.github.com/repos/open-webui/open-webui/releases/latest"
             ) as response:
                 response.raise_for_status()
                 data = await response.json()
@@ -2693,6 +2693,53 @@ if len(OAUTH_PROVIDERS) > 0:
         same_site=WEBUI_SESSION_COOKIE_SAME_SITE,
         https_only=WEBUI_SESSION_COOKIE_SECURE,
     )
+
+
+def get_user_role(user: UserModel, user_data: UserInfo) -> str:
+    if user and Users.get_num_users() == 1:
+        # If the user is the only user, assign the role "admin" - actually repairs role for single user on login
+        return "admin"
+    if not user and Users.get_num_users() == 0:
+        # If there are no users, assign the role "admin", as the first user will be an admin
+        return "admin"
+
+    if webui_app.state.config.ENABLE_OAUTH_ROLE_MANAGEMENT:
+        oauth_claim = webui_app.state.config.OAUTH_ROLES_CLAIM
+        oauth_allowed_roles = webui_app.state.config.OAUTH_ALLOWED_ROLES
+        oauth_admin_roles = webui_app.state.config.OAUTH_ADMIN_ROLES
+        oauth_roles = None
+        role = "pending"  # Default/fallback role if no matching roles are found
+
+        # Next block extracts the roles from the user data, accepting nested claims of any depth
+        if oauth_claim and oauth_allowed_roles and oauth_admin_roles:
+            claim_data = user_data
+            nested_claims = oauth_claim.split(".")
+            for nested_claim in nested_claims:
+                claim_data = claim_data.get(nested_claim, {})
+            oauth_roles = claim_data if isinstance(claim_data, list) else None
+
+        # If any roles are found, check if they match the allowed or admin roles
+        if oauth_roles:
+            # If role management is enabled, and matching roles are provided, use the roles
+            for allowed_role in oauth_allowed_roles:
+                # If the user has any of the allowed roles, assign the role "user"
+                if allowed_role in oauth_roles:
+                    role = "user"
+                    break
+            for admin_role in oauth_admin_roles:
+                # If the user has any of the admin roles, assign the role "admin"
+                if admin_role in oauth_roles:
+                    role = "admin"
+                    break
+    else:
+        if not user:
+            # If role management is disabled, use the default role for new users
+            role = webui_app.state.config.DEFAULT_USER_ROLE
+        else:
+            # If role management is disabled, use the existing role for existing users
+            role = user.role
+
+    return role
 
 
 @app.get("/oauth/{provider}/login")
