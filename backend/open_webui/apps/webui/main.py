@@ -50,7 +50,7 @@ from open_webui.config import (
     WEBHOOK_URL,
     WEBUI_AUTH,
     WEBUI_BANNERS,
-    AppConfig,
+    AppConfig, OAUTH_ALLOWED_ROLES, OAUTH_ADMIN_ROLES,
 )
 from open_webui.env import (
     WEBUI_AUTH_TRUSTED_EMAIL_HEADER,
