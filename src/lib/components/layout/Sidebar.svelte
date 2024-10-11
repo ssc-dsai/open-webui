@@ -194,6 +194,7 @@
 
 		if (search === '') {
 			await initChatList();
+			allChatsLoaded = false;
 			return;
 		} else {
 			searchDebounceTimeout = setTimeout(async () => {
