@@ -28,6 +28,8 @@
 		return 'bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200';
 	}
 
+	$: showPercentage = shouldShowPercentage(mergedDocuments);
+
 	$: if (citation) {
 		mergedDocuments = citation.document?.map((c, i) => {
 			return {
