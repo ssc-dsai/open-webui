@@ -114,7 +114,7 @@
 		{:else}
 			<Collapsible bind:open={isCollapsibleOpen} className="w-full">
 				<div
-					class="flex items-center gap-2 text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition cursor-pointer"
+					class="flex items-center gap-1 text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition cursor-pointer"
 				>
 					<div class="flex-grow flex items-center gap-1 overflow-hidden">
 						<span class="whitespace-nowrap hidden sm:inline">{$i18n.t('References from')}</span>
