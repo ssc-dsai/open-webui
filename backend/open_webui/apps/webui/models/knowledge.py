@@ -99,6 +99,8 @@ class KnowledgeResponse(KnowledgeModel):
 class KnowledgeUserResponse(KnowledgeUserModel):
     files: Optional[list[FileMetadataResponse | dict]] = None
 
+    files: Optional[list[FileMetadataResponse | dict]] = None
+
 
 class KnowledgeForm(BaseModel):
     name: str
