@@ -63,6 +63,7 @@ class ChatModel(BaseModel):
 class ChatForm(BaseModel):
     chat: dict
 
+
 class ChatTitleMessagesForm(BaseModel):
     title: str
     messages: list[dict]
