@@ -25,7 +25,10 @@
 	export let token;
 	export let lang = '';
 	export let code = '';
-	export let allow_execution = true;
+
+	export let className = 'my-2';
+	export let editorClassName = '';
+	export let stickyButtonsClassName = 'top-8';
 
 	export let className = 'my-2';
 	export let editorClassName = '';
