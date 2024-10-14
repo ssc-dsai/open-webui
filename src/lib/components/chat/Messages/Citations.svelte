@@ -144,6 +144,8 @@
 											<div class="bg-gray-50 dark:bg-gray-800 rounded-full size-4">
 												{idx + 1}
 											</div>
+										</button>
+										{#if idx === 0}<span class="mr-1">,</span>
 										{/if}
 										<div class="flex-1 mx-1 line-clamp-1 truncate">
 											{citation.source.name}
