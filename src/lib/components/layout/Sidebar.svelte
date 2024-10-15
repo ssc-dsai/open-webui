@@ -61,6 +61,8 @@
 	let showDropdown = false;
 	let showPinnedChat = true;
 
+	let showPinnedChat = true;
+
 	// Pagination variables
 	let chatListLoading = false;
 	let allChatsLoaded = false;
@@ -531,6 +533,7 @@
 				on:input={searchDebounceHandler}
 				placeholder={$i18n.t('Search')}
 			/>
+		</div>
 
 			<div class="absolute z-40 right-3.5 top-1">
 				<Tooltip content={$i18n.t('New folder')}>
