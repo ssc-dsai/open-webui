@@ -255,7 +255,6 @@
 							type: 'add',
 							name: e.detail.name
 						});
-
 						show = false;
 					}}
 					on:delete={(e) => {
