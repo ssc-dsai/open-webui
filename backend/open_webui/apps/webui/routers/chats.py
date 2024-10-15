@@ -262,12 +262,23 @@ async def search_user_chats(
     limit = 60
     skip = (page - 1) * limit
 
-    return [
+    chat_list = [
         ChatTitleIdResponse(**chat.model_dump())
         for chat in Chats.get_chats_by_user_id_and_search_text(
             user.id, text, skip=skip, limit=limit
         )
     ]
+
+    # Delete tag if no chat is found
+    words = text.strip().split(" ")
+    if page == 1 and len(words) == 1 and words[0].startswith("tag:"):
+        tag_id = words[0].replace("tag:", "")
+        if len(chat_list) == 0:
+            if Tags.get_tag_by_name_and_user_id(tag_id, user.id):
+                log.debug(f"deleting tag: {tag_id}")
+                Tags.delete_tag_by_name_and_user_id(tag_id, user.id)
+
+    return chat_list
 
 
 ############################

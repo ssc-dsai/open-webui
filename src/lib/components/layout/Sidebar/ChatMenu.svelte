@@ -255,6 +255,7 @@
 							type: 'add',
 							name: e.detail.name
 						});
+
 						show = false;
 					}}
 					on:delete={(e) => {
@@ -262,6 +263,7 @@
 							type: 'delete',
 							name: e.detail.name
 						});
+
 						show = false;
 					}}
 					on:close={() => {
