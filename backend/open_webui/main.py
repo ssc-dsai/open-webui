@@ -243,6 +243,8 @@ from open_webui.utils.oauth import oauth_manager
 
 from open_webui.utils.oauth import oauth_manager
 
+from open_webui.utils.oauth import oauth_manager
+
 if SAFE_MODE:
     print("SAFE MODE ENABLED")
     Functions.deactivate_all_functions()
@@ -2693,53 +2695,6 @@ if len(OAUTH_PROVIDERS) > 0:
         same_site=WEBUI_SESSION_COOKIE_SAME_SITE,
         https_only=WEBUI_SESSION_COOKIE_SECURE,
     )
-
-
-def get_user_role(user: UserModel, user_data: UserInfo) -> str:
-    if user and Users.get_num_users() == 1:
-        # If the user is the only user, assign the role "admin" - actually repairs role for single user on login
-        return "admin"
-    if not user and Users.get_num_users() == 0:
-        # If there are no users, assign the role "admin", as the first user will be an admin
-        return "admin"
-
-    if webui_app.state.config.ENABLE_OAUTH_ROLE_MANAGEMENT:
-        oauth_claim = webui_app.state.config.OAUTH_ROLES_CLAIM
-        oauth_allowed_roles = webui_app.state.config.OAUTH_ALLOWED_ROLES
-        oauth_admin_roles = webui_app.state.config.OAUTH_ADMIN_ROLES
-        oauth_roles = None
-        role = "pending"  # Default/fallback role if no matching roles are found
-
-        # Next block extracts the roles from the user data, accepting nested claims of any depth
-        if oauth_claim and oauth_allowed_roles and oauth_admin_roles:
-            claim_data = user_data
-            nested_claims = oauth_claim.split(".")
-            for nested_claim in nested_claims:
-                claim_data = claim_data.get(nested_claim, {})
-            oauth_roles = claim_data if isinstance(claim_data, list) else None
-
-        # If any roles are found, check if they match the allowed or admin roles
-        if oauth_roles:
-            # If role management is enabled, and matching roles are provided, use the roles
-            for allowed_role in oauth_allowed_roles:
-                # If the user has any of the allowed roles, assign the role "user"
-                if allowed_role in oauth_roles:
-                    role = "user"
-                    break
-            for admin_role in oauth_admin_roles:
-                # If the user has any of the admin roles, assign the role "admin"
-                if admin_role in oauth_roles:
-                    role = "admin"
-                    break
-    else:
-        if not user:
-            # If role management is disabled, use the default role for new users
-            role = webui_app.state.config.DEFAULT_USER_ROLE
-        else:
-            # If role management is disabled, use the existing role for existing users
-            role = user.role
-
-    return role
 
 
 @app.get("/oauth/{provider}/login")
