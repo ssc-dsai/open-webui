@@ -100,7 +100,6 @@ from open_webui.config import (
     WEBUI_AUTH,
     WEBUI_NAME,
     AppConfig,
-    run_migrations,
     reset_config,
 )
 from open_webui.constants import ERROR_MESSAGES, TASKS, WEBHOOK_MESSAGES
