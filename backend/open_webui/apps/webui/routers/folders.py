@@ -130,7 +130,7 @@ async def update_folder_name_by_id(
             )
 
 ############################
-# Update Folder Name By Id
+# Update Folder Parent Id By Id
 ############################
 
 
