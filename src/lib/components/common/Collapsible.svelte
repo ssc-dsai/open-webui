@@ -31,8 +31,10 @@
 
 <div class={className}>
 	{#if title !== null}
-		<button class="w-full" on:click={handleClick}>
-			<div class="w-full font-medium transition flex items-center justify-between gap-2">
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class={buttonClassName} on:pointerup={() => (open = !open)}>
+			<div class=" w-fit font-medium transition flex items-center justify-between gap-2">
 				<div>
 					{title}
 				</div>
@@ -45,15 +47,17 @@
 					{/if}
 				</div>
 			</div>
-		</button>
+		</div>
 	{:else}
-		<button
-			type="button"
-			on:click={handleClick}
-			class="flex w-full items-center gap-2 text-left text-gray-500 transition hover:text-gray-700 dark:hover:text-gray-300"
-		>
-			<slot />
-		</button>
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div class={buttonClassName} on:pointerup={() => (open = !open)}>
+			<div
+				class="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition"
+			>
+				<slot />
+			</div>
+		</div>
 	{/if}
 
 	<div
