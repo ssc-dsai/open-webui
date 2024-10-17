@@ -385,6 +385,7 @@
 							on:blur={() => {
 								nameUpdateHandler();
 								edit = false;
+								nameUpdateHandler();
 							}}
 							on:click={(e) => {
 								// Prevent accidental collapse toggling when clicking inside input
