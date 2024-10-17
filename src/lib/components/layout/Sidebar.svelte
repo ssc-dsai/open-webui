@@ -706,6 +706,21 @@
 							if (res) {
 								await initFolders();
 							}
+						} else if (type === 'folder') {
+							if (folders[id].parent_id === null) {
+								return;
+							}
+
+							const res = await updateFolderParentIdById(localStorage.token, id, null).catch(
+								(error) => {
+									toast.error(error);
+									return null;
+								}
+							);
+
+							if (res) {
+								await initFolders();
+							}
 						}
 					}}
 				>
