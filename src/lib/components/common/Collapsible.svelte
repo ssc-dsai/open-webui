@@ -15,18 +15,7 @@
 	export let buttonClassName = 'w-fit';
 	export let title = null;
 
-	let contentHeight = 0;
-	let contentElement: HTMLElement;
-
-	function handleClick(event) {
-		if (!event.target.closest('.no-toggle')) {
-			open = !open;
-		}
-	}
-
-	$: if (contentElement) {
-		contentHeight = open ? contentElement.scrollHeight : 0;
-	}
+	export let disabled = false;
 </script>
 
 <div class={className}>
@@ -60,12 +49,8 @@
 		</div>
 	{/if}
 
-	<div
-		bind:this={contentElement}
-		class="overflow-hidden transition-all duration-300 ease-in-out"
-		style="max-height: {contentHeight}px;"
-	>
-		<div>
+	{#if open && !disabled}
+		<div transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}>
 			<slot name="content" />
 		</div>
 	</div>
