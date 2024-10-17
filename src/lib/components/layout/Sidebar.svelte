@@ -530,7 +530,12 @@
 
 			<div class="absolute z-40 right-4 top-1">
 				<Tooltip content={$i18n.t('New folder')}>
-					<button class="p-1 rounded-lg hover:bg-white/5 transition">
+					<button
+						class="p-1 rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900 transition"
+						on:click={() => {
+							createFolder();
+						}}
+					>
 						<Plus />
 					</button>
 				</Tooltip>
@@ -629,6 +634,10 @@
 										selectedChatId = null;
 									}}
 									on:change={async () => {
+										initChatList();
+									}}
+									on:change={async () => {
+										await pinnedChats.set(await getPinnedChatList(localStorage.token));
 										initChatList();
 									}}
 									on:tag={(e) => {
@@ -757,6 +766,10 @@
 										selectedChatId = null;
 									}}
 									on:change={async () => {
+										initChatList();
+									}}
+									on:change={async () => {
+										await pinnedChats.set(await getPinnedChatList(localStorage.token));
 										initChatList();
 									}}
 									on:tag={(e) => {
