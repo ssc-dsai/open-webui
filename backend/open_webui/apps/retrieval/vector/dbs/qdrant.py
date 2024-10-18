@@ -1,5 +1,12 @@
 from qdrant_client import QdrantClient as Client, models
-from qdrant_client.http.models import Distance, PointStruct, VectorParams, Filter, FieldCondition, MatchValue
+from qdrant_client.http.models import (
+    Distance,
+    PointStruct,
+    VectorParams,
+    Filter,
+    FieldCondition,
+    MatchValue,
+)
 
 
 from typing import Optional
@@ -85,15 +92,12 @@ class QdrantClient:
         try:
             if not self.client.collection_exists(collection_name=collection_name):
                 return None
-            
+
             # Build the conditions if a filter is provided.
             qdrant_filter = None
             if filter:
                 conditions = [
-                    FieldCondition(
-                        key=key,
-                        match=MatchValue(value=value)
-                    )
+                    FieldCondition(key=key, match=MatchValue(value=value))
                     for key, value in filter.items()
                 ]
                 qdrant_filter = Filter(must=conditions)
@@ -103,9 +107,9 @@ class QdrantClient:
                 scroll_filter=qdrant_filter,
                 limit=limit or 1,
             )
-            
+
             return self._result_to_get_result(points)
-            
+
         except Exception as e:
             print(f"Error querying Qdrant: {e}")
             return None
@@ -157,20 +161,22 @@ class QdrantClient:
             points=points,
         )
 
-    def delete(self, collection_name: str, ids: Optional[list[str]] = None, filter: Optional[dict] = None):
+    def delete(
+        self,
+        collection_name: str,
+        ids: Optional[list[str]] = None,
+        filter: Optional[dict] = None,
+    ):
         # Delete the items from the collection based on the ids.
         if ids:
             selector = ids
         elif filter:
             conditions = [
-                FieldCondition(
-                    key=key,
-                    match=MatchValue(value=value)
-                )
+                FieldCondition(key=key, match=MatchValue(value=value))
                 for key, value in filter.items()
             ]
             selector = Filter(must=conditions)
- 
+
         return self.client.delete(
             collection_name=collection_name,
             points_selector=selector,
