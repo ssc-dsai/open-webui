@@ -1,5 +1,6 @@
 <script>
 	import { getContext, createEventDispatcher, onMount, onDestroy, tick } from 'svelte';
+	import DOMPurify from 'dompurify';
 
 	const i18n = getContext('i18n');
 	const dispatch = createEventDispatcher();
