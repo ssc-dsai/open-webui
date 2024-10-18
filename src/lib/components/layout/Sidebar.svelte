@@ -625,7 +625,6 @@
 										initChatList();
 									}}
 									on:change={async () => {
-										await pinnedChats.set(await getPinnedChatList(localStorage.token));
 										initChatList();
 									}}
 									on:tag={(e) => {
@@ -772,7 +771,6 @@
 										initChatList();
 									}}
 									on:change={async () => {
-										await pinnedChats.set(await getPinnedChatList(localStorage.token));
 										initChatList();
 									}}
 									on:tag={(e) => {
