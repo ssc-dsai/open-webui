@@ -1,5 +1,6 @@
 from qdrant_client import QdrantClient as Client, models
-from qdrant_client.http.models import Distance, PointStruct, VectorParams
+from qdrant_client.http.models import Distance, PointStruct, VectorParams, Filter, FieldCondition, MatchValue
+
 
 from typing import Optional
 
@@ -77,6 +78,37 @@ class QdrantClient:
         )
 
         return self._result_to_search_result(result)
+
+    def query(
+        self, collection_name: str, filter: dict, limit: Optional[int] = None
+    ) -> Optional[GetResult]:
+        try:
+            if not self.client.collection_exists(collection_name=collection_name):
+                return None
+            
+            # Build the conditions if a filter is provided.
+            qdrant_filter = None
+            if filter:
+                conditions = [
+                    FieldCondition(
+                        key=key,
+                        match=MatchValue(value=value)
+                    )
+                    for key, value in filter.items()
+                ]
+                qdrant_filter = Filter(must=conditions)
+
+            points, _ = self.client.scroll(
+                collection_name=collection_name,
+                scroll_filter=qdrant_filter,
+                limit=limit or 1,
+            )
+            
+            return self._result_to_get_result(points)
+            
+        except Exception as e:
+            print(f"Error querying Qdrant: {e}")
+            return None
 
     def get(self, collection_name: str) -> Optional[GetResult]:
         points = self.client.count(
