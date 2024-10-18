@@ -64,6 +64,11 @@ class ChatForm(BaseModel):
     chat: dict
 
 
+class ChatImportForm(ChatForm):
+    pinned: Optional[bool] = False
+    folder_id: Optional[str] = None
+
+
 class ChatTitleMessagesForm(BaseModel):
     title: str
     messages: list[dict]
