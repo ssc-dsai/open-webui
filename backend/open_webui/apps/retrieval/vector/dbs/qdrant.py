@@ -157,11 +157,23 @@ class QdrantClient:
             points=points,
         )
 
-    def delete(self, collection_name: str, ids: list[str]):
+    def delete(self, collection_name: str, ids: Optional[list[str]] = None, filter: Optional[dict] = None):
         # Delete the items from the collection based on the ids.
+        if ids:
+            selector = ids
+        elif filter:
+            conditions = [
+                FieldCondition(
+                    key=key,
+                    match=MatchValue(value=value)
+                )
+                for key, value in filter.items()
+            ]
+            selector = Filter(must=conditions)
+ 
         return self.client.delete(
             collection_name=collection_name,
-            points_selector=ids,
+            points_selector=selector,
         )
 
     def reset(self):
