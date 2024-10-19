@@ -801,26 +801,6 @@
 												]?.at(-1);
 
 												commandOptionButton?.click();
-											} else if (e.key === 'Tab') {
-												const words = findWordIndices(prompt);
-
-												if (words.length > 0) {
-													const word = words.at(0);
-													const fullPrompt = prompt;
-
-													prompt = prompt.substring(0, word?.endIndex + 1);
-													await tick();
-
-													e.target.scrollTop = e.target.scrollHeight;
-													prompt = fullPrompt;
-													await tick();
-
-													e.preventDefault();
-													e.target.setSelectionRange(word?.startIndex, word.endIndex + 1);
-												}
-
-												e.target.style.height = '';
-												e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
 											}
 
 											if (e.key === 'Escape') {
