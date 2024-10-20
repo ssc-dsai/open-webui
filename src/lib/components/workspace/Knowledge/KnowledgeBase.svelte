@@ -38,12 +38,8 @@
 	import EllipsisVertical from '$lib/components/icons/EllipsisVertical.svelte';
 	import Drawer from '$lib/components/common/Drawer.svelte';
 	import ChevronLeft from '$lib/components/icons/ChevronLeft.svelte';
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 	import LockClosed from '$lib/components/icons/LockClosed.svelte';
 	import AccessControlModal from '../common/AccessControlModal.svelte';
-=======
-	import MenuLines from '$lib/components/icons/MenuLines.svelte';
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 
 	let largeScreen = true;
 
@@ -495,15 +491,12 @@
 				const percentage = (300 / width) * 100;
 				// set the minSize to the percentage, must be an integer
 				minSize = !largeScreen ? 100 : Math.floor(percentage);
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 
 				if (showSidepanel) {
 					if (pane && pane.isExpanded() && pane.getSize() < minSize) {
 						pane.resize(minSize);
 					}
 				}
-=======
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 			}
 		});
 
@@ -607,11 +600,7 @@
 	}}
 />
 
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 <div class="flex flex-col w-full h-full max-h-[100dvh] translate-y-1" id="collection-container">
-=======
-<div class="flex flex-col w-full h-full max-h-[100dvh]" id="collection-container">
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 	{#if id && knowledge}
 		<AccessControlModal
 			bind:show={showAccessControlModal}
@@ -711,7 +700,6 @@
 													clip-rule="evenodd"
 												/>
 											</svg>
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 										</div>
 										<input
 											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
@@ -827,8 +815,6 @@
 											>
 												{selectedFile?.meta?.name}
 											</a>
-=======
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 										</div>
 										<input
 											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
@@ -840,25 +826,10 @@
 										/>
 
 										<div>
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 											<button
 												class="self-center w-fit text-sm py-1 px-2.5 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg"
 												on:click={() => {
 													updateFileContentHandler();
-=======
-											<AddContentMenu
-												on:upload={(e) => {
-													if (e.detail.type === 'directory') {
-														uploadDirectoryHandler();
-													} else if (e.detail.type === 'text') {
-														showAddTextContentModal = true;
-													} else {
-														document.getElementById('files-input').click();
-													}
-												}}
-												on:sync={(e) => {
-													showSyncConfirmModal = true;
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 												}}
 											>
 												{$i18n.t('Save')}
@@ -931,177 +902,8 @@
 										/>
 									{/key}
 								</div>
-<<<<<<< HEAD:src/lib/components/workspace/Knowledge/KnowledgeBase.svelte
 							</div>
 						</div>
-=======
-
-								{#if filteredItems.length > 0}
-									<div class=" flex overflow-y-auto h-full w-full scrollbar-hidden text-xs">
-										<Files
-											files={filteredItems}
-											{selectedFileId}
-											on:click={(e) => {
-												selectedFileId = selectedFileId === e.detail ? null : e.detail;
-											}}
-											on:delete={(e) => {
-												console.log(e.detail);
-
-												selectedFileId = null;
-												deleteFileHandler(e.detail);
-											}}
-										/>
-									</div>
-								{:else}
-									<div class="m-auto text-gray-500 text-xs">{$i18n.t('No content found')}</div>
-								{/if}
-							</div>
-						</div>
-					</div>
-				</Pane>
-
-				{#if largeScreen}
-					<PaneResizer class="relative flex w-2 items-center justify-center bg-background group">
-						<div class="z-10 flex h-7 w-5 items-center justify-center rounded-sm">
-							<EllipsisVertical className="size-4 invisible group-hover:visible" />
-						</div>
-					</PaneResizer>
-					<Pane>
-						<div class="flex-1 flex justify-start h-full max-h-full">
-							{#if selectedFile}
-								<div class=" flex flex-col w-full h-full max-h-full ml-2">
-									<div class="flex-shrink-0 mb-2 flex items-center">
-										{#if !showSidepanel}
-											<div class="-translate-x-2">
-												<button
-													class="w-full text-left text-sm p-1.5 rounded-lg dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-gray-850"
-													on:click={() => {
-														pane.expand();
-													}}
-												>
-													<ChevronLeft strokeWidth="2.5" />
-												</button>
-											</div>
-										{/if}
-
-										<div class=" flex-1 text-2xl font-medium line-clamp-1">
-											{selectedFile?.meta?.name}
-										</div>
-
-										<div>
-											<button
-												class="self-center w-fit text-sm py-1 px-2.5 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg"
-												on:click={() => {
-													updateFileContentHandler();
-												}}
-											>
-												{$i18n.t('Save')}
-											</button>
-										</div>
-									</div>
-
-									<div
-										class=" flex-1 w-full h-full max-h-full text-sm bg-transparent outline-none overflow-y-auto scrollbar-hidden"
-									>
-										{#key selectedFile.id}
-											<RichTextInput
-												className="input-prose-sm"
-												bind:value={selectedFile.data.content}
-												placeholder={$i18n.t('Add content here')}
-											/>
-										{/key}
-									</div>
-								</div>
-							{:else}
-								<div class="m-auto pb-32">
-									<div>
-										<div class=" flex w-full mt-1 mb-3.5">
-											<div class="flex-1">
-												<div class="flex items-center justify-between w-full px-0.5 mb-1">
-													<div class="w-full">
-														<input
-															type="text"
-															class="text-center w-full font-medium text-3xl font-primary bg-transparent outline-none"
-															bind:value={knowledge.name}
-															on:input={() => {
-																changeDebounceHandler();
-															}}
-														/>
-													</div>
-												</div>
-
-												<div class="flex w-full px-1">
-													<input
-														type="text"
-														class="text-center w-full text-gray-500 bg-transparent outline-none"
-														bind:value={knowledge.description}
-														on:input={() => {
-															changeDebounceHandler();
-														}}
-													/>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class=" mt-2 text-center text-sm text-gray-200 dark:text-gray-700 w-full">
-										{$i18n.t('Select a file to view or drag and drop a file to upload')}
-									</div>
-								</div>
-							{/if}
-						</div>
-					</Pane>
-				{:else if !largeScreen && selectedFileId !== null}
-					<Drawer
-						className="h-full"
-						show={selectedFileId !== null}
-						on:close={() => {
-							selectedFileId = null;
-						}}
-					>
-						<div class="flex flex-col justify-start h-full max-h-full p-2">
-							<div class=" flex flex-col w-full h-full max-h-full">
-								<div class="flex-shrink-0 mt-1 mb-2 flex items-center">
-									<div class="mr-2">
-										<button
-											class="w-full text-left text-sm p-1.5 rounded-lg dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-gray-850"
-											on:click={() => {
-												selectedFileId = null;
-											}}
-										>
-											<ChevronLeft strokeWidth="2.5" />
-										</button>
-									</div>
-									<div class=" flex-1 text-xl line-clamp-1">
-										{selectedFile?.meta?.name}
-									</div>
-
-									<div>
-										<button
-											class="self-center w-fit text-sm py-1 px-2.5 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg"
-											on:click={() => {
-												updateFileContentHandler();
-											}}
-										>
-											{$i18n.t('Save')}
-										</button>
-									</div>
-								</div>
-
-								<div
-									class=" flex-1 w-full h-full max-h-full py-2.5 px-3.5 rounded-xl text-sm bg-gray-50 dark:text-gray-300 dark:bg-gray-850 outline-none overflow-y-auto scrollbar-hidden"
-								>
-									{#key selectedFile.id}
-										<RichTextInput
-											className="input-prose-sm"
-											bind:value={selectedFile.data.content}
-											placeholder={$i18n.t('Add content here')}
-										/>
-									{/key}
-								</div>
-							</div>
-						</div>
->>>>>>> 03282da45 (refac: collection styling):src/lib/components/workspace/Knowledge/Collection.svelte
 					</Drawer>
 				{/if}
 			</PaneGroup>
