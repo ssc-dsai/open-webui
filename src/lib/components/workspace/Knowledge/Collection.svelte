@@ -2,6 +2,7 @@
 	import Fuse from 'fuse.js';
 	import { toast } from 'svelte-sonner';
 	import { v4 as uuidv4 } from 'uuid';
+	import { PaneGroup, Pane, PaneResizer } from 'paneforge';
 
 	import { onMount, getContext, onDestroy, tick } from 'svelte';
 	const i18n = getContext('i18n');
@@ -595,7 +596,7 @@
 	}}
 />
 
-<div class="flex flex-col w-full h-full max-h-[100dvh]">
+<div class="flex flex-col w-full h-full max-h-[100dvh]" id="collection-container">
 	{#if id && knowledge}
 		<div class="flex flex-row flex-1 h-full max-h-full pb-2.5">
 			<div
@@ -889,16 +890,30 @@
 														changeDebounceHandler();
 													}}
 												/>
-											</div>
+											</svg>
 										</div>
+										<input
+											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
+											bind:value={query}
+											placeholder={$i18n.t('Search Collection')}
+											on:focus={() => {
+												selectedFileId = null;
+											}}
+										/>
 
-										<div class="flex w-full px-1">
-											<input
-												type="text"
-												class="text-center w-full text-gray-500 bg-transparent outline-none"
-												bind:value={knowledge.description}
-												on:input={() => {
-													changeDebounceHandler();
+										<div>
+											<AddContentMenu
+												on:upload={(e) => {
+													if (e.detail.type === 'directory') {
+														uploadDirectoryHandler();
+													} else if (e.detail.type === 'text') {
+														showAddTextContentModal = true;
+													} else {
+														document.getElementById('files-input').click();
+													}
+												}}
+												on:sync={(e) => {
+													showSyncConfirmModal = true;
 												}}
 											/>
 										</div>
