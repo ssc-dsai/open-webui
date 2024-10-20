@@ -436,10 +436,6 @@
 				view.updateState(newState);
 
 				value = serializeEditorContent(newState.doc); // Convert ProseMirror content to markdown text
-
-				if (dev) {
-					console.log(value);
-				}
 				eventDispatch('input', { value });
 			},
 			handleDOMEvents: {
