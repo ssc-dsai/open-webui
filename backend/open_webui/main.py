@@ -12,6 +12,96 @@ from typing import Optional
 
 import aiohttp
 import requests
+
+from open_webui.apps.ollama.main import (
+    app as ollama_app,
+    get_all_models as get_ollama_models,
+    generate_chat_completion as generate_ollama_chat_completion,
+    generate_openai_chat_completion as generate_ollama_openai_chat_completion,
+    GenerateChatCompletionForm,
+)
+from open_webui.apps.openai.main import (
+    app as openai_app,
+    generate_chat_completion as generate_openai_chat_completion,
+    get_all_models as get_openai_models,
+)
+
+from open_webui.apps.retrieval.main import app as retrieval_app
+from open_webui.apps.retrieval.utils import get_rag_context, rag_template
+
+from open_webui.apps.socket.main import (
+    app as socket_app,
+    periodic_usage_pool_cleanup,
+    get_event_call,
+    get_event_emitter,
+)
+
+from open_webui.apps.webui.main import (
+    app as webui_app,
+    generate_function_chat_completion,
+    get_pipe_models,
+)
+from open_webui.apps.webui.internal.db import Session
+
+from open_webui.apps.webui.models.auths import Auths
+from open_webui.apps.webui.models.functions import Functions
+from open_webui.apps.webui.models.models import Models
+from open_webui.apps.webui.models.users import UserModel, Users
+
+from open_webui.apps.webui.utils import load_function_module_by_id
+
+from open_webui.apps.audio.main import app as audio_app
+from open_webui.apps.images.main import app as images_app
+
+from authlib.integrations.starlette_client import OAuth
+from authlib.oidc.core import UserInfo
+
+
+from open_webui.config import (
+    CACHE_DIR,
+    CORS_ALLOW_ORIGIN,
+    DEFAULT_LOCALE,
+    ENABLE_ADMIN_CHAT_ACCESS,
+    ENABLE_ADMIN_EXPORT,
+    ENABLE_MODEL_FILTER,
+    ENABLE_OAUTH_SIGNUP,
+    ENABLE_OLLAMA_API,
+    ENABLE_OPENAI_API,
+    ENV,
+    FRONTEND_BUILD_DIR,
+    MODEL_FILTER_LIST,
+    OAUTH_MERGE_ACCOUNTS_BY_EMAIL,
+    OAUTH_PROVIDERS,
+    ENABLE_SEARCH_QUERY,
+    SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE,
+    STATIC_DIR,
+    TASK_MODEL,
+    TASK_MODEL_EXTERNAL,
+    TITLE_GENERATION_PROMPT_TEMPLATE,
+    TAGS_GENERATION_PROMPT_TEMPLATE,
+    TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
+    WEBHOOK_URL,
+    WEBUI_AUTH,
+    WEBUI_NAME,
+    AppConfig,
+    run_migrations,
+    reset_config,
+)
+from open_webui.constants import ERROR_MESSAGES, TASKS, WEBHOOK_MESSAGES
+from open_webui.env import (
+    CHANGELOG,
+    GLOBAL_LOG_LEVEL,
+    SAFE_MODE,
+    SRC_LOG_LEVELS,
+    VERSION,
+    WEBUI_BUILD_HASH,
+    WEBUI_SECRET_KEY,
+    WEBUI_SESSION_COOKIE_SAME_SITE,
+    WEBUI_SESSION_COOKIE_SECURE,
+    WEBUI_URL,
+    RESET_CONFIG_ON_START,
+    OFFLINE_MODE,
+)
 from fastapi import (
     Depends,
     FastAPI,
@@ -194,6 +284,7 @@ app.state.config.WEBHOOK_URL = WEBHOOK_URL
 app.state.config.TASK_MODEL = TASK_MODEL
 app.state.config.TASK_MODEL_EXTERNAL = TASK_MODEL_EXTERNAL
 app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE = TITLE_GENERATION_PROMPT_TEMPLATE
+app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE = TAGS_GENERATION_PROMPT_TEMPLATE
 app.state.config.SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE = (
     SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE
 )
@@ -1376,6 +1467,7 @@ async def get_task_config(user=Depends(get_verified_user)):
         "TASK_MODEL": app.state.config.TASK_MODEL,
         "TASK_MODEL_EXTERNAL": app.state.config.TASK_MODEL_EXTERNAL,
         "TITLE_GENERATION_PROMPT_TEMPLATE": app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE,
+        "TAGS_GENERATION_PROMPT_TEMPLATE": app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE,
         "ENABLE_SEARCH_QUERY": app.state.config.ENABLE_SEARCH_QUERY,
         "SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE": app.state.config.SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE,
         "TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE": app.state.config.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
@@ -1386,6 +1478,7 @@ class TaskConfigForm(BaseModel):
     TASK_MODEL: Optional[str]
     TASK_MODEL_EXTERNAL: Optional[str]
     TITLE_GENERATION_PROMPT_TEMPLATE: str
+    TAGS_GENERATION_PROMPT_TEMPLATE: str
     SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE: str
     ENABLE_SEARCH_QUERY: bool
     TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE: str
@@ -1398,6 +1491,10 @@ async def update_task_config(form_data: TaskConfigForm, user=Depends(get_admin_u
     app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE = (
         form_data.TITLE_GENERATION_PROMPT_TEMPLATE
     )
+    app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE = (
+        form_data.TAGS_GENERATION_PROMPT_TEMPLATE
+    )
+
     app.state.config.SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE = (
         form_data.SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE
     )
@@ -1410,6 +1507,7 @@ async def update_task_config(form_data: TaskConfigForm, user=Depends(get_admin_u
         "TASK_MODEL": app.state.config.TASK_MODEL,
         "TASK_MODEL_EXTERNAL": app.state.config.TASK_MODEL_EXTERNAL,
         "TITLE_GENERATION_PROMPT_TEMPLATE": app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE,
+        "TAGS_GENERATION_PROMPT_TEMPLATE": app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE,
         "SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE": app.state.config.SEARCH_QUERY_GENERATION_PROMPT_TEMPLATE,
         "ENABLE_SEARCH_QUERY": app.state.config.ENABLE_SEARCH_QUERY,
         "TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE": app.state.config.TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
