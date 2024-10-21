@@ -8,6 +8,7 @@
 
 	import { getPromptByCommand, getPrompts, updatePromptByCommand } from '$lib/apis/prompts';
 	import { page } from '$app/stores';
+	import Textarea from '$lib/components/common/Textarea.svelte';
 
 	import PromptEditor from '$lib/components/workspace/Prompts/PromptEditor.svelte';
 
