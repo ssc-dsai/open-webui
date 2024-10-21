@@ -36,6 +36,7 @@
 	let landingPageMode = '';
 	let chatBubble = true;
 	let chatDirection: 'LTR' | 'RTL' = 'LTR';
+	let showUpdateToast = true;
 
 	// Admin - Show Update Available Toast
 	let showUpdateToast = true;
