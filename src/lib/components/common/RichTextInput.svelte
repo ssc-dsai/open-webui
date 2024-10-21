@@ -437,6 +437,8 @@
 
 				value = serializeEditorContent(newState.doc); // Convert ProseMirror content to markdown text
 				eventDispatch('input', { value });
+
+				console.log('Editor content:', value);
 			},
 			handleDOMEvents: {
 				focus: (view, event) => {
