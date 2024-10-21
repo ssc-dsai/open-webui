@@ -58,7 +58,7 @@ from open_webui.apps.webui.internal.db import Session
 from open_webui.apps.webui.main import (
     app as webui_app,
     generate_function_chat_completion,
-    get_pipe_models,
+    get_all_models as get_open_webui_models,
 )
 from open_webui.apps.webui.models.functions import Functions
 from open_webui.apps.webui.models.models import Models
