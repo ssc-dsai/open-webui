@@ -339,6 +339,19 @@
 						</div>
 					</th>
 
+					<th
+						scope="col"
+						class="px-3 py-2 cursor-pointer select-none"
+						on:click={() => setSortKey('oauth_sub')}
+					>
+						{$i18n.t('OAuth ID')}
+						{#if sortKey === 'oauth_sub'}
+							{sortOrder === 'asc' ? '▲' : '▼'}
+						{:else}
+							<span class="invisible">▲</span>
+						{/if}
+					</th>
+
 					<th scope="col" class="px-3 py-2 text-right" />
 				</tr>
 			</thead>
