@@ -1171,6 +1171,10 @@ async def get_all_models():
     if len([model for model in models if model["owned_by"] != "arena"]) == 0:
         return []
 
+    # If there are no models, return an empty list
+    if len([model for model in models if model["owned_by"] != "arena"]) == 0:
+        return []
+
     global_action_ids = [
         function.id for function in Functions.get_global_action_functions()
     ]
