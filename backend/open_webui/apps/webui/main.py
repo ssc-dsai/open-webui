@@ -130,7 +130,6 @@ app.include_router(auths.router, prefix="/auths", tags=["auths"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 
 app.include_router(chats.router, prefix="/chats", tags=["chats"])
-app.include_router(folders.router, prefix="/folders", tags=["folders"])
 
 app.include_router(models.router, prefix="/models", tags=["models"])
 app.include_router(knowledge.router, prefix="/knowledge", tags=["knowledge"])
