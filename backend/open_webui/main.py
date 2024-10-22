@@ -210,6 +210,7 @@ from open_webui.utils.task import (
     moa_response_generation_template,
     tags_generation_template,
     search_query_generation_template,
+    emoji_generation_template,
     title_generation_template,
     tools_function_calling_generation_template,
 )
@@ -1779,7 +1780,7 @@ Your task is to reflect the speaker's likely facial expression through a fitting
 
 Message: """{{prompt}}"""
 '''
-    content = title_generation_template(
+    content = emoji_generation_template(
         template,
         form_data["prompt"],
         {
