@@ -77,6 +77,11 @@ async function* openAIStreamToIterator(
 				continue;
 			}
 
+			if (parsedData.selected_model_id) {
+				yield { done: false, value: '', selectedModelId: parsedData.selected_model_id };
+				continue;
+			}
+
 			yield {
 				done: false,
 				value: parsedData.choices?.[0]?.delta?.content ?? '',
