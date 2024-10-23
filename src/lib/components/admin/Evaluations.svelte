@@ -14,6 +14,10 @@
 	let tokenizer = null;
 	let model = null;
 
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
+
 	import { models } from '$lib/stores';
 	import { deleteFeedbackById, exportAllFeedbacks, getAllFeedbacks } from '$lib/apis/evaluations';
 
