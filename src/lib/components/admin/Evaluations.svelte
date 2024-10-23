@@ -10,6 +10,10 @@
 
 	let selectedTab = 'leaderboard';
 
+	let page = 1;
+
+	$: paginatedFeedbacks = feedbacks.slice((page - 1) * 10, page * 10);
+
 	type Feedback = {
 		model_id: string;
 		sibling_model_ids?: string[];
@@ -262,6 +266,10 @@
 	<div class="mt-0.5 mb-2 gap-1 flex flex-col md:flex-row justify-between">
 		<div class="flex md:self-center text-lg font-medium px-0.5">
 			{$i18n.t('Feedback History')}
+
+			<div class="flex self-center w-[1px] h-6 mx-2.5 bg-gray-50 dark:bg-gray-850" />
+
+			<span class="text-lg font-medium text-gray-500 dark:text-gray-300">{feedbacks.length}</span>
 		</div>
 	</div>
 
@@ -300,7 +308,7 @@
 					</tr>
 				</thead>
 				<tbody class="">
-					{#each feedbacks as feedback (feedback.id)}
+					{#each paginatedFeedbacks as feedback (feedback.id)}
 						<tr class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs">
 							<td class=" py-0.5 text-right font-semibold">
 								<div class="flex justify-center">
@@ -378,6 +386,8 @@
 			</table>
 		{/if}
 	</div>
+
+	<Pagination bind:page count={feedbacks.length} perPage={10} />
 
 	<div class="pb-8"></div>
 {/if}
