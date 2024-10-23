@@ -372,7 +372,11 @@
 							</td>
 
 							<td class=" px-3 py-1 text-right font-semibold">
-								<FeedbackMenu>
+								<FeedbackMenu
+									on:delete={(e) => {
+										deleteFeedbackHandler(feedback.id);
+									}}
+								>
 									<button
 										class="self-center w-fit text-sm p-1.5 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"
 									>
@@ -386,8 +390,9 @@
 			</table>
 		{/if}
 	</div>
-
-	<Pagination bind:page count={feedbacks.length} perPage={10} />
+	{#if feedbacks.length > 10}
+		<Pagination bind:page count={feedbacks.length} perPage={10} />
+	{/if}
 
 	<div class="pb-8"></div>
 {/if}
