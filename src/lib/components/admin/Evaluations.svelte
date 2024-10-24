@@ -10,43 +10,97 @@
 
 	let selectedTab = 'leaderboard';
 
+	let query = '';
 	let page = 1;
+
+	let tagEmbeddings = new Map();
+
+	let loaded = false;
+	let debounceTimer;
 
 	$: paginatedFeedbacks = feedbacks.slice((page - 1) * 10, page * 10);
 
 	type Feedback = {
-		model_id: string;
-		sibling_model_ids?: string[];
-		rating: number;
+		id: string;
+		data: {
+			rating: number;
+			model_id: string;
+			sibling_model_ids: string[] | null;
+			reason: string;
+			comment: string;
+			tags: string[];
+		};
+		user: {
+			name: string;
+			profile_image_url: string;
+		};
+		updated_at: number;
 	};
 
 	type ModelStats = {
 		rating: number;
 		won: number;
-		draw: number;
 		lost: number;
 	};
 
-	function calculateModelStats(feedbacks: Feedback[]): Map<string, ModelStats> {
+	//////////////////////
+	//
+	// Rank models by Elo rating
+	//
+	//////////////////////
+
+	const rankHandler = async (similarities: Map<string, number> = new Map()) => {
+		const modelStats = calculateModelStats(feedbacks, similarities);
+
+		rankedModels = $models
+			.filter((m) => m?.owned_by !== 'arena' && (m?.info?.meta?.hidden ?? false) !== true)
+			.map((model) => {
+				const stats = modelStats.get(model.id);
+				return {
+					...model,
+					rating: stats ? Math.round(stats.rating) : '-',
+					stats: {
+						count: stats ? stats.won + stats.lost : 0,
+						won: stats ? stats.won.toString() : '-',
+						lost: stats ? stats.lost.toString() : '-'
+					}
+				};
+			})
+			.sort((a, b) => {
+				if (a.rating === '-' && b.rating !== '-') return 1;
+				if (b.rating === '-' && a.rating !== '-') return -1;
+				if (a.rating !== '-' && b.rating !== '-') return b.rating - a.rating;
+				return a.name.localeCompare(b.name);
+			});
+	};
+
+	function calculateModelStats(
+		feedbacks: Feedback[],
+		similarities: Map<string, number>
+	): Map<string, ModelStats> {
 		const stats = new Map<string, ModelStats>();
 		const K = 32;
 
 		function getOrDefaultStats(modelId: string): ModelStats {
-			return stats.get(modelId) || { rating: 1000, won: 0, draw: 0, lost: 0 };
+			return stats.get(modelId) || { rating: 1000, won: 0, lost: 0 };
 		}
 
 		function updateStats(modelId: string, ratingChange: number, outcome: number) {
 			const currentStats = getOrDefaultStats(modelId);
 			currentStats.rating += ratingChange;
 			if (outcome === 1) currentStats.won++;
-			else if (outcome === 0.5) currentStats.draw++;
 			else if (outcome === 0) currentStats.lost++;
 			stats.set(modelId, currentStats);
 		}
 
-		function calculateEloChange(ratingA: number, ratingB: number, outcome: number): number {
+		function calculateEloChange(
+			ratingA: number,
+			ratingB: number,
+			outcome: number,
+			similarity: number
+		): number {
 			const expectedScore = 1 / (1 + Math.pow(10, (ratingB - ratingA) / 400));
-			return K * (outcome - expectedScore);
+			return K * (outcome - expectedScore) * similarity;
 		}
 
 		feedbacks.forEach((feedback) => {
@@ -68,11 +122,13 @@
 					return; // Skip invalid ratings
 			}
 
+			const similarity = similarities.get(feedback.id) || 1;
+
 			const opponents = feedback.data.sibling_model_ids || [];
 			opponents.forEach((modelB) => {
 				const statsB = getOrDefaultStats(modelB);
-				const changeA = calculateEloChange(statsA.rating, statsB.rating, outcome);
-				const changeB = calculateEloChange(statsB.rating, statsA.rating, 1 - outcome);
+				const changeA = calculateEloChange(statsA.rating, statsB.rating, outcome, similarity);
+				const changeB = calculateEloChange(statsB.rating, statsA.rating, 1 - outcome, similarity);
 
 				updateStats(modelA, changeA, outcome);
 				updateStats(modelB, changeB, 1 - outcome);
@@ -167,6 +223,21 @@
 			{:else if selectedTab === 'feedbacks'}
 				<Feedbacks {feedbacks} />
 			{/if}
+		</div>
+
+		<div class=" flex space-x-2">
+			<Tooltip content={$i18n.t('Re-rank models by topic similarity')}>
+				<div class="flex flex-1">
+					<div class=" self-center ml-1 mr-3">
+						<MagnifyingGlass className="size-3" />
+					</div>
+					<input
+						class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
+						bind:value={query}
+						placeholder={$i18n.t('Search')}
+					/>
+				</div>
+			</Tooltip>
 		</div>
 	</div>
 
