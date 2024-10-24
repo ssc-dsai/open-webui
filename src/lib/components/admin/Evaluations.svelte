@@ -18,6 +18,13 @@
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	dayjs.extend(relativeTime);
 
+	import * as ort from 'onnxruntime-web';
+	import { AutoModel, AutoTokenizer } from '@huggingface/transformers';
+
+	const embedding_model = 'TaylorAI/bge-micro-v2';
+	let tokenizer = null;
+	let model = null;
+
 	import { models } from '$lib/stores';
 	import { deleteFeedbackById, exportAllFeedbacks, getAllFeedbacks } from '$lib/apis/evaluations';
 
