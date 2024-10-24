@@ -330,6 +330,19 @@
 		{/if}
 	</div>
 
+	<div class=" text-gray-500 text-xs mt-1.5 w-full flex justify-end">
+		<div class=" text-right">
+			<div class="line-clamp-1">
+				ⓘ {$i18n.t(
+					'The evaluation leaderboard is based on the Elo rating system and is updated in real-time.'
+				)}
+			</div>
+			{$i18n.t(
+				'The leaderboard is currently in beta, and we may adjust the rating calculations as we refine the algorithm.'
+			)}
+		</div>
+	</div>
+
 	<div class="pb-4"></div>
 
 	<div class="mt-0.5 mb-2 gap-1 flex flex-col md:flex-row justify-between">
