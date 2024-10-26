@@ -189,8 +189,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 =======
 
-> > > > > > > a4f29e1e5 (chore: format)
-
 ## [0.3.32] - 2024-10-06
 
 ### Added
