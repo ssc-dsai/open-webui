@@ -16,6 +16,7 @@
 	let tagEmbeddings = new Map();
 
 	let loaded = false;
+	let loadingLeaderboard = true;
 	let debounceTimer;
 
 	$: paginatedFeedbacks = feedbacks.slice((page - 1) * 10, page * 10);
@@ -72,6 +73,8 @@
 				if (a.rating !== '-' && b.rating !== '-') return b.rating - a.rating;
 				return a.name.localeCompare(b.name);
 			});
+
+		loadingLeaderboard = false;
 	};
 
 	function calculateModelStats(
@@ -260,6 +263,9 @@
 						class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
 						bind:value={query}
 						placeholder={$i18n.t('Search')}
+						on:focus={() => {
+							loadEmbeddingModel();
+						}}
 					/>
 				</div>
 			</Tooltip>
@@ -269,13 +275,22 @@
 	<div
 		class="scrollbar-hidden relative whitespace-nowrap overflow-x-auto max-w-full rounded pt-0.5"
 	>
+		{#if loadingLeaderboard}
+			<div class=" absolute top-0 bottom-0 left-0 right-0 flex">
+				<div class="m-auto">
+					<Spinner />
+				</div>
+			</div>
+		{/if}
 		{#if (rankedModels ?? []).length === 0}
 			<div class="text-center text-xs text-gray-500 dark:text-gray-400 py-1">
 				{$i18n.t('No models found')}
 			</div>
 		{:else}
 			<table
-				class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto max-w-full rounded"
+				class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto max-w-full rounded {loadingLeaderboard
+					? 'opacity-20'
+					: ''}"
 			>
 				<thead
 					class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-850 dark:text-gray-400 -translate-y-0.5"
