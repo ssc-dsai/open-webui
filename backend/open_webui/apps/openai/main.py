@@ -366,6 +366,11 @@ async def get_models(url_idx: Optional[int] = None, user=Depends(get_verified_us
         headers = {}
         headers["Authorization"] = f"Bearer {key}"
         headers["Content-Type"] = "application/json"
+        if OPENAI_FORWARD_USER_INFO_AS_HEADERS:
+            headers["X-OpenWebUI-User-Name"] = user.name
+            headers["X-OpenWebUI-User-Id"] = user.id
+            headers["X-OpenWebUI-User-Email"] = user.email
+            headers["X-OpenWebUI-User-Role"] = user.role
 
         if ENABLE_FORWARD_USER_INFO_HEADERS:
             headers["X-OpenWebUI-User-Name"] = user.name
