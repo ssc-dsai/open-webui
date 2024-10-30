@@ -971,6 +971,13 @@ QDRANT_API_KEY = os.environ.get("QDRANT_API_KEY", None)
 QDRANT_URL = os.environ.get("QDRANT_URL", "http://localhost:6333")
 QDRANT_TIMEOUT_SECONDS = os.environ.get("QDRANT_TIMEOUT_SECONDS", 5)
 
+# OpenSearch
+OPENSEARCH_URI = os.environ.get("OPENSEARCH_URI", "https://localhost:9200")
+OPENSEARCH_SSL = os.environ.get("OPENSEARCH_SSL", True)
+OPENSEARCH_CERT_VERIFY = os.environ.get("OPENSEARCH_CERT_VERIFY", False)
+OPENSEARCH_USERNAME = os.environ.get("OPENSEARCH_USERNAME", None)
+OPENSEARCH_PASSWORD = os.environ.get("OPENSEARCH_PASSWORD", None)
+
 ####################################
 # Information Retrieval (RAG)
 ####################################
