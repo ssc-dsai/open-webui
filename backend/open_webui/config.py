@@ -429,7 +429,6 @@ OAUTH_ADMIN_ROLES = PersistentConfig(
 )
 
 
-
 def load_oauth_providers():
     OAUTH_PROVIDERS.clear()
     if GOOGLE_CLIENT_ID.value and GOOGLE_CLIENT_SECRET.value:
