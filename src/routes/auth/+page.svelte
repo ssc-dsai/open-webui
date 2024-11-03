@@ -119,6 +119,7 @@
 		} else {
 			onboarding = $config?.onboarding ?? false;
 		}
+		onboarding = $config?.onboarding ?? false;
 	});
 </script>
 
