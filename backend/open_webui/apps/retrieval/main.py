@@ -472,7 +472,7 @@ async def get_rag_config(user=Depends(get_admin_user)):
             "translation": app.state.YOUTUBE_LOADER_TRANSLATION,
         },
         "web": {
-            "web_loader_ssl_verification": not app.state.config.ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION,
+            "web_loader_ssl_verification": app.state.config.ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION,
             "search": {
                 "enabled": app.state.config.ENABLE_RAG_WEB_SEARCH,
                 "engine": app.state.config.RAG_WEB_SEARCH_ENGINE,
@@ -580,7 +580,6 @@ async def update_rag_config(form_data: ConfigUpdateForm, user=Depends(get_admin_
         app.state.YOUTUBE_LOADER_TRANSLATION = form_data.youtube.translation
 
     if form_data.web is not None:
-        # if "Bypass SSL verification for Websites" == True then web_loader_ssl_verification = False.
         app.state.config.ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION = (
             # Note: When UI "Bypass SSL verification for Websites"=True then ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION=False
             form_data.web.web_loader_ssl_verification
@@ -638,7 +637,7 @@ async def update_rag_config(form_data: ConfigUpdateForm, user=Depends(get_admin_
             "translation": app.state.YOUTUBE_LOADER_TRANSLATION,
         },
         "web": {
-            "web_loader_ssl_verification": not app.state.config.ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION,
+            "web_loader_ssl_verification": app.state.config.ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION,
             "search": {
                 "enabled": app.state.config.ENABLE_RAG_WEB_SEARCH,
                 "engine": app.state.config.RAG_WEB_SEARCH_ENGINE,
