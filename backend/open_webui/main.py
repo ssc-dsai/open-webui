@@ -2592,6 +2592,7 @@ async def get_app_config(request: Request):
             "enable_api_key": webui_app.state.config.ENABLE_API_KEY,
             "enable_signup": webui_app.state.config.ENABLE_SIGNUP,
             "enable_login_form": webui_app.state.config.ENABLE_LOGIN_FORM,
+            "enable_ldap_form": webui_app.state.config.ENABLE_LDAP,
             **(
                 {
                     "enable_web_search": retrieval_app.state.config.ENABLE_RAG_WEB_SEARCH,
