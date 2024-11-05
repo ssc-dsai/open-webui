@@ -945,7 +945,6 @@
 		{/if}
 	</div>
 
-<!-- LLM failed to help successfully for this tooltip -->
 	{#if admin}
 		<div class=" py-0.5 w-full justify-between">
 			<Tooltip
