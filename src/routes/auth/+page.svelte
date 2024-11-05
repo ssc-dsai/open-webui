@@ -200,6 +200,8 @@
 										{$i18n.t(`Get started with {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
+									{:else if mode === 'signin'}
+										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else}
 										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{/if}
@@ -415,29 +417,37 @@
 								{/if}
 								{#if showSwitchButtonForSignInForm}
 									<button
-									class="flex items-center px-6 border-2 dark:border-gray-800 duration-300 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 w-full rounded-2xl dark:text-white text-sm py-3 transition"
-									on:click={() => {
-										if (mode === 'ldap')
-											mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
-										else mode = 'ldap';
-									}}
+										class="bg-gray-700/5 hover:bg-gray-700/10 dark:bg-gray-100/5 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition w-full rounded-full font-medium text-sm py-2.5"
+										on:click={() => {
+											if (mode === 'ldap')
+												mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
+											else mode = 'ldap';
+										}}
 									>
 										{#if mode === 'ldap'}
-											<svg 
+											<svg
 												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24" 
-												fill="none" 
+												viewBox="0 0 24 24"
+												fill="none"
 												stroke-width="1.5"
 												stroke="currentColor"
 												class="size-6 mr-3"
 											>
-												<path 
+												<path
 													stroke-linecap="round"
 													stroke-linejoin="round"
 													d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
 													stroke-width="2"
 												/>
-												<rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2" stroke-linecap="round"/>
+												<rect
+													x="3"
+													y="5"
+													width="18"
+													height="14"
+													rx="2"
+													stroke-width="2"
+													stroke-linecap="round"
+												/>
 											</svg>
 										{:else}
 											<svg
@@ -455,7 +465,11 @@
 												/>
 											</svg>
 										{/if}
-										<span>{mode === 'ldap' ? $i18n.t('Continue with Email') : $i18n.t('Continue with LDAP')}</span>
+										<span
+											>{mode === 'ldap'
+												? $i18n.t('Continue with Email')
+												: $i18n.t('Continue with LDAP')}</span
+										>
 									</button>
 								{/if}
 							</div>
