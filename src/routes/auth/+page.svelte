@@ -43,14 +43,6 @@
 		}
 	};
 
-	const ldapSignInHandler = async () => {
-		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
-			toast.error(error);
-			return null;
-		});
-		await setSessionUser(sessionUser);
-	};
-
 	const signInHandler = async () => {
 		const sessionUser = await userSignIn(email, password).catch((error) => {
 			toast.error(error);
@@ -87,6 +79,14 @@
 		} else {
 			await signUpHandler();
 		}
+	};
+
+	const ldapSignInHandler = async () => {
+		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
+			toast.error(error);
+			return null;
+		});
+		await setSessionUser(sessionUser);
 	};
 
 	const checkOauthCallback = async () => {
@@ -412,6 +412,7 @@
 										>
 									</button>
 								{/if}
+
 								{#if showSwitchButtonForSignInForm}
 									<button
 										class="flex items-center px-6 border-2 dark:border-gray-800 duration-300 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 w-full rounded-2xl dark:text-white text-sm py-3 transition"
@@ -428,7 +429,7 @@
 												fill="none"
 												stroke-width="1.5"
 												stroke="currentColor"
-												class="size-6 mr-3"
+												class="size-4 mr-3"
 											>
 												<path
 													stroke-linecap="round"
@@ -453,7 +454,7 @@
 												viewBox="0 0 24 24"
 												stroke-width="1.5"
 												stroke="currentColor"
-												class="size-6 mr-3"
+												class="size-4 mr-3"
 											>
 												<path
 													stroke-linecap="round"
