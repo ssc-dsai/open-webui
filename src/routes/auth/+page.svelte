@@ -81,14 +81,6 @@
 		}
 	};
 
-	const ldapSignInHandler = async () => {
-		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
-			toast.error(error);
-			return null;
-		});
-		await setSessionUser(sessionUser);
-	};
-
 	const checkOauthCallback = async () => {
 		if (!$page.url.hash) {
 			return;
@@ -422,6 +414,7 @@
 							<div class="mt-2">
 								<button
 									class="flex justify-center items-center text-xs w-full text-center underline"
+									type="button"
 									on:click={() => {
 										if (mode === 'ldap')
 											mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
