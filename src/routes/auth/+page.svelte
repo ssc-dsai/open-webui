@@ -81,14 +81,6 @@
 		}
 	};
 
-	const ldapSignInHandler = async () => {
-		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
-			toast.error(error);
-			return null;
-		});
-		await setSessionUser(sessionUser);
-	};
-
 	const checkOauthCallback = async () => {
 		if (!$page.url.hash) {
 			return;
