@@ -323,7 +323,7 @@
 							</div>
 						</form>
 
-						{#if showOtherSignInMethods}
+						{#if Object.keys($config?.oauth?.providers ?? {}).length > 0}
 							<div class="inline-flex items-center justify-center w-full">
 								<hr class="w-32 h-px my-4 border-0 dark:bg-gray-100/10 bg-gray-700/10" />
 								{#if $config?.features.enable_login_form || $config?.features.enable_ldap}
@@ -415,64 +415,25 @@
 										>
 									</button>
 								{/if}
+							</div>
+						{/if}
 
-								{#if showSwitchButtonForSignInForm}
-									<button
-										class="flex justify-center items-center bg-gray-700/5 hover:bg-gray-700/10 dark:bg-gray-100/5 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition w-full rounded-full font-medium text-sm py-2.5"
-										on:click={() => {
-											if (mode === 'ldap')
-												mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
-											else mode = 'ldap';
-										}}
+						{#if $config?.features.enable_ldap}
+							<div class="mt-2">
+								<button
+									class="flex justify-center items-center text-xs w-full text-center underline"
+									on:click={() => {
+										if (mode === 'ldap')
+											mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
+										else mode = 'ldap';
+									}}
+								>
+									<span
+										>{mode === 'ldap'
+											? $i18n.t('Continue with Email')
+											: $i18n.t('Continue with LDAP')}</span
 									>
-										{#if mode === 'ldap'}
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="size-4 mr-3"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-													stroke-width="2"
-												/>
-												<rect
-													x="3"
-													y="5"
-													width="18"
-													height="14"
-													rx="2"
-													stroke-width="2"
-													stroke-linecap="round"
-												/>
-											</svg>
-										{:else}
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="size-4 mr-3"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"
-												/>
-											</svg>
-										{/if}
-										<span
-											>{mode === 'ldap'
-												? $i18n.t('Continue with Email')
-												: $i18n.t('Continue with LDAP')}</span
-										>
-									</button>
-								{/if}
+								</button>
 							</div>
 						{/if}
 
