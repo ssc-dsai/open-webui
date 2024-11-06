@@ -43,14 +43,6 @@
 		}
 	};
 
-	const ldapSignInHandler = async () => {
-		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
-			toast.error(error);
-			return null;
-		});
-		await setSessionUser(sessionUser);
-	};
-
 	const signInHandler = async () => {
 		const sessionUser = await userSignIn(email, password).catch((error) => {
 			toast.error(error);
@@ -87,6 +79,14 @@
 		} else {
 			await signUpHandler();
 		}
+	};
+
+	const ldapSignInHandler = async () => {
+		const sessionUser = await ldapUserSignIn(ldapUsername, ldapPassword).catch((error) => {
+			toast.error(error);
+			return null;
+		});
+		await setSessionUser(sessionUser);
 	};
 
 	const checkOauthCallback = async () => {
@@ -415,9 +415,10 @@
 										>
 									</button>
 								{/if}
+
 								{#if showSwitchButtonForSignInForm}
 									<button
-										class="bg-gray-700/5 hover:bg-gray-700/10 dark:bg-gray-100/5 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition w-full rounded-full font-medium text-sm py-2.5"
+										class="flex justify-center items-center bg-gray-700/5 hover:bg-gray-700/10 dark:bg-gray-100/5 dark:hover:bg-gray-100/10 dark:text-gray-300 dark:hover:text-white transition w-full rounded-full font-medium text-sm py-2.5"
 										on:click={() => {
 											if (mode === 'ldap')
 												mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
@@ -431,7 +432,7 @@
 												fill="none"
 												stroke-width="1.5"
 												stroke="currentColor"
-												class="size-6 mr-3"
+												class="size-4 mr-3"
 											>
 												<path
 													stroke-linecap="round"
@@ -456,7 +457,7 @@
 												viewBox="0 0 24 24"
 												stroke-width="1.5"
 												stroke="currentColor"
-												class="size-6 mr-3"
+												class="size-4 mr-3"
 											>
 												<path
 													stroke-linecap="round"
