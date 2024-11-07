@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **🔧Qdrant Vector DB Timeout**: Adding Timeout to Qdrant Client
+- **🔧 Qdrant Vector DB Timeout**: Adding Timeout to Qdrant Client
 - **🏷️ Header Name**: Removed (Open WebUI) from headers
 - **🎨 DSAI Logos**: Removed Open WebUI remaining logos
 
