@@ -19,26 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **🏷️ Header Name**: Removed (Open WebUI) from headers
 - **🎨 DSAI Logos**: Removed Open WebUI remaining logos
 
-## [0.3.32-ccv2-1.0.1] - 2024-10-18
-
-### Fixed
-
-- **🔧Qdrant Vector DB Support**: fix missing query method and updated delete method to accept filters.
-
-## [0.3.32-ccv2-1.0.0] - 2024-10-10
-
-### Added
-
-- **🔗 Qdrant Vector DB Support**: Now supporting Qdrant as a vector database.
-
-### Fixed
-
-- **🔧Fix OPEN AI Dalle response type**: changed response type to an url.
-
-### Changed
-
-- **🌎 i18n Updates**: Only kept en-CA and fr-CA locales.
-- **🎨 Branding updates**: Changed branding to match SSC DSAI's branding.
 ## [0.3.35] - 2024-10-26
 
 ### Added
@@ -105,6 +85,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - **👋 Goodbye Sidebar Tags**: Sidebar tag clutter is gone. We’ve shifted tag buttons to more effective query-based tag filtering for a sleeker, more agile interface.
+
+## [0.3.32-ccv2-1.0.1] - 2024-10-18
+
+### Fixed
+
+- **🔧Qdrant Vector DB Support**: fix missing query method and updated delete method to accept filters.
+
+## [0.3.32-ccv2-1.0.0] - 2024-10-10
+
+### Added
+
+- **🔗 Qdrant Vector DB Support**: Now supporting Qdrant as a vector database.
+
+### Fixed
+
+- **🔧Fix OPEN AI Dalle response type**: changed response type to an url.
+
+### Changed
+
+- **🌎 i18n Updates**: Only kept en-CA and fr-CA locales.
+- **🎨 Branding updates**: Changed branding to match SSC DSAI's branding.
 
 ## [0.3.32] - 2024-10-06
 
