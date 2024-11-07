@@ -516,7 +516,13 @@
 				<div class="absolute z-40 w-full h-full flex justify-center"></div>
 			{/if}
 
-			<div class="absolute z-40 right-4 top-1">
+			<SearchInput
+				bind:value={search}
+				on:input={searchDebounceHandler}
+				placeholder={$i18n.t('Search')}
+			/>
+
+			<div class="absolute z-40 right-3.5 top-1">
 				<Tooltip content={$i18n.t('New folder')}>
 					<button
 						class="p-1 rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900 transition"
@@ -528,12 +534,6 @@
 					</button>
 				</Tooltip>
 			</div>
-
-			<SearchInput
-				bind:value={search}
-				on:input={searchDebounceHandler}
-				placeholder={$i18n.t('Search')}
-			/>
 		</div>
 
 			<div class="absolute z-40 right-3.5 top-1">
