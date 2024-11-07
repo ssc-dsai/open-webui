@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **🔧 Rebasing**: Rebasing to version v0.3.35, kept our qdrant client for this version
 
-
 ## [0.3.32-ccv2-1.0.3] - 2024-11-07
 
 ### Fixed
