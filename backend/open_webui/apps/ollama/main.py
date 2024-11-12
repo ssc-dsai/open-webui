@@ -296,6 +296,8 @@ async def get_all_models():
                     for model in response.get("models", []):
                         model["model"] = f"{prefix_id}.{model['model']}"
 
+        print(responses)
+
         models = {
             "models": merge_models_lists(
                 map(
