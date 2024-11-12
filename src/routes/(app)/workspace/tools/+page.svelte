@@ -1,6 +1,16 @@
 <script>
 	import { onMount } from 'svelte';
 	import Tools from '$lib/components/workspace/Tools.svelte';
+
+	onMount(async () => {
+		await Promise.all([
+			(async () => {
+				tools.set(await getTools(localStorage.token));
+			})()
+		]);
+	});
 </script>
 
-<Tools />
+{#if $tools !== null}
+	<Tools />
+{/if}
