@@ -181,6 +181,20 @@
 						pipelineUrls[url] = true;
 					}
 				});
+
+				for (const url of OPENAI_API_BASE_URLS) {
+					if (!OPENAI_API_CONFIGS[url]) {
+						OPENAI_API_CONFIGS[url] = {};
+					}
+				}
+			}
+
+			if (ENABLE_OLLAMA_API) {
+				for (const url of OLLAMA_BASE_URLS) {
+					if (!OLLAMA_API_CONFIGS[url]) {
+						OLLAMA_API_CONFIGS[url] = {};
+					}
+				}
 			}
 
 			if (ENABLE_OLLAMA_API) {

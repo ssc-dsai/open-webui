@@ -106,6 +106,7 @@ export const getOpenAIUrls = async (token: string = '') => {
 	return res.OPENAI_API_BASE_URLS;
 };
 
+
 export const updateOpenAIUrls = async (token: string = '', urls: string[]) => {
 	let error = null;
 
