@@ -15,6 +15,11 @@
 	import { goto } from '$app/navigation';
 
 	import MenuLines from '$lib/components/icons/MenuLines.svelte';
+	import { getModels } from '$lib/apis';
+	import { getPrompts } from '$lib/apis/prompts';
+	import { getKnowledgeItems } from '$lib/apis/knowledge';
+	import { getTools } from '$lib/apis/tools';
+	import { getFunctions } from '$lib/apis/functions';
 
 	const i18n = getContext('i18n');
 
