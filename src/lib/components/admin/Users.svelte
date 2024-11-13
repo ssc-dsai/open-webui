@@ -1,5 +1,106 @@
-<script lang="ts">
-	import Users from '$lib/components/admin/Users.svelte';
+<script>
+	import { WEBUI_BASE_URL } from '$lib/constants';
+	import { WEBUI_NAME, config, user, showSidebar } from '$lib/stores';
+	import { goto } from '$app/navigation';
+	import { onMount, getContext } from 'svelte';
+
+	import dayjs from 'dayjs';
+	import relativeTime from 'dayjs/plugin/relativeTime';
+	dayjs.extend(relativeTime);
+
+	import { toast } from 'svelte-sonner';
+
+	import { updateUserRole, getUsers, deleteUserById } from '$lib/apis/users';
+
+	import EditUserModal from '$lib/components/admin/EditUserModal.svelte';
+	import Pagination from '$lib/components/common/Pagination.svelte';
+	import ChatBubbles from '$lib/components/icons/ChatBubbles.svelte';
+	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	import UserChatsModal from '$lib/components/admin/UserChatsModal.svelte';
+	import AddUserModal from '$lib/components/admin/AddUserModal.svelte';
+	import ConfirmDialog from '$lib/components/common/ConfirmDialog.svelte';
+	import Badge from '$lib/components/common/Badge.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
+	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
+	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
+	import About from '$lib/components/chat/Settings/About.svelte';
+
+	const i18n = getContext('i18n');
+
+	let loaded = false;
+	let tab = '';
+	let users = [];
+
+	let search = '';
+	let selectedUser = null;
+
+	let page = 1;
+
+	let showDeleteConfirmDialog = false;
+	let showAddUserModal = false;
+
+	let showUserChatsModal = false;
+	let showEditUserModal = false;
+
+	const updateRoleHandler = async (id, role) => {
+		const res = await updateUserRole(localStorage.token, id, role).catch((error) => {
+			toast.error(error);
+			return null;
+		});
+
+		if (res) {
+			users = await getUsers(localStorage.token);
+		}
+	};
+
+	const deleteUserHandler = async (id) => {
+		const res = await deleteUserById(localStorage.token, id).catch((error) => {
+			toast.error(error);
+			return null;
+		});
+		if (res) {
+			users = await getUsers(localStorage.token);
+		}
+	};
+
+	onMount(async () => {
+		if ($user?.role !== 'admin') {
+			await goto('/');
+		} else {
+			users = await getUsers(localStorage.token);
+		}
+		loaded = true;
+	});
+	let sortKey = 'created_at'; // default sort key
+	let sortOrder = 'asc'; // default sort order
+
+	function setSortKey(key) {
+		if (sortKey === key) {
+			sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+		} else {
+			sortKey = key;
+			sortOrder = 'asc';
+		}
+	}
+
+	let filteredUsers;
+
+	$: filteredUsers = users
+		.filter((user) => {
+			if (search === '') {
+				return true;
+			} else {
+				let name = user.name.toLowerCase();
+				const query = search.toLowerCase();
+				return name.includes(query);
+			}
+		})
+		.sort((a, b) => {
+			if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1;
+			if (a[sortKey] > b[sortKey]) return sortOrder === 'asc' ? 1 : -1;
+			return 0;
+		})
+		.slice((page - 1) * 20, page * 20);
 </script>
 
 <ConfirmDialog
@@ -227,30 +328,6 @@
 						</div>
 					</th>
 
-					<th
-						scope="col"
-						class="px-3 py-1.5 cursor-pointer select-none"
-						on:click={() => setSortKey('oauth_sub')}
-					>
-						<div class="flex gap-1.5 items-center">
-							{$i18n.t('OAuth ID')}
-
-							{#if sortKey === 'oauth_sub'}
-								<span class="font-normal"
-									>{#if sortOrder === 'asc'}
-										<ChevronUp className="size-2" />
-									{:else}
-										<ChevronDown className="size-2" />
-									{/if}
-								</span>
-							{:else}
-								<span class="invisible">
-									<ChevronUp className="size-2" />
-								</span>
-							{/if}
-						</div>
-					</th>
-
 					<th scope="col" class="px-3 py-2 text-right" />
 				</tr>
 			</thead>
@@ -384,18 +461,3 @@
 
 	<Pagination bind:page count={users.length} />
 {/if}
-
-<style>
-	.font-mona {
-		font-family: 'Mona Sans';
-	}
-
-	.scrollbar-hidden::-webkit-scrollbar {
-		display: none; /* for Chrome, Safari and Opera */
-	}
-
-	.scrollbar-hidden {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
-	}
-</style>
