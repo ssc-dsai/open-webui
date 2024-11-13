@@ -29,7 +29,12 @@
 		init();
 	}
 
+	$: if (tools) {
+		selectedToolIds = Object.keys(tools).filter((toolId) => tools[toolId]?.enabled ?? false);
+	}
+
 	const init = async () => {
+		console.log('init');
 		if ($_tools === null) {
 			await _tools.set(await getTools(localStorage.token));
 		}
