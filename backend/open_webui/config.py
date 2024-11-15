@@ -111,6 +111,7 @@ DEFAULT_CONFIG = {
                     "vocabulary for a college entrance exam",
                 ],
                 "content": "Help me study vocabulary: write a sentence for me to fill in the blank, and I'll try to pick the correct option.",
+                "lang": "en-US",
             },
             {
                 "title": [
@@ -118,10 +119,12 @@ DEFAULT_CONFIG = {
                     "for what to do with my kids' art",
                 ],
                 "content": "What are 5 creative things I could do with my kids' art? I don't want to throw them away, but it's also so much clutter.",
+                "lang": "en-US",
             },
             {
                 "title": ["Tell me a fun fact", "about the Roman Empire"],
                 "content": "Tell me a random fun fact about the Roman Empire",
+                "lang": "en-US",
             },
             {
                 "title": [
@@ -129,6 +132,7 @@ DEFAULT_CONFIG = {
                     "of a website's sticky header",
                 ],
                 "content": "Show me a code snippet of a website's sticky header in CSS and JavaScript.",
+                "lang": "en-US",
             },
             {
                 "title": [
@@ -136,10 +140,12 @@ DEFAULT_CONFIG = {
                     "if I'm familiar with buying and selling stocks",
                 ],
                 "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks.",
+                "lang": "en-US",
             },
             {
                 "title": ["Overcome procrastination", "give me tips"],
                 "content": "Could you start by asking me about instances when I procrastinate the most and then give me some suggestions to overcome it?",
+                "lang": "en-US",
             },
             {
                 "title": [
@@ -147,6 +153,7 @@ DEFAULT_CONFIG = {
                     "rewrite it for better readability ",
                 ],
                 "content": 'Check the following sentence for grammar and clarity: "[sentence]". Rewrite it for better readability while maintaining its original meaning.',
+                "lang": "en-US",
             },
         ],
     },
@@ -713,18 +720,22 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
         {
             "title": ["Help me study", "vocabulary for a college entrance exam"],
             "content": "Help me study vocabulary: write a sentence for me to fill in the blank, and I'll try to pick the correct option.",
+            "lang": "en-US",
         },
         {
             "title": ["Give me ideas", "for what to do with my kids' art"],
             "content": "What are 5 creative things I could do with my kids' art? I don't want to throw them away, but it's also so much clutter.",
+            "lang": "en-US",
         },
         {
             "title": ["Tell me a fun fact", "about the Roman Empire"],
             "content": "Tell me a random fun fact about the Roman Empire",
+            "lang": "en-US",
         },
         {
             "title": ["Show me a code snippet", "of a website's sticky header"],
             "content": "Show me a code snippet of a website's sticky header in CSS and JavaScript.",
+            "lang": "en-US",
         },
         {
             "title": [
@@ -732,10 +743,12 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
                 "if I'm familiar with buying and selling stocks",
             ],
             "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks.",
+            "lang": "en-US",
         },
         {
             "title": ["Overcome procrastination", "give me tips"],
             "content": "Could you start by asking me about instances when I procrastinate the most and then give me some suggestions to overcome it?",
+            "lang": "en-US",
         },
     ],
 )
