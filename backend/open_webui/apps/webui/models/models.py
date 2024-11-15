@@ -21,6 +21,10 @@ from open_webui.utils.access_control import has_access
 from open_webui.utils.utils import has_access
 
 
+
+from open_webui.utils.utils import has_access
+
+
 log = logging.getLogger(__name__)
 log.setLevel(SRC_LOG_LEVELS["MODELS"])
 
