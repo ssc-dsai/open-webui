@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Tooltip from '$lib/components/common/Tooltip.svelte';
-	import Plus from '$lib/components/icons/Plus.svelte';
 	import { getContext, onMount } from 'svelte';
 
 	const i18n = getContext('i18n');
@@ -98,8 +96,8 @@
 						}
 					}}
 				>
-					<option class=" text-gray-700" value="private" selected>Private</option>
-					<option class=" text-gray-700" value="public" selected>Public</option>
+					<option class=" text-gray-700" value={true} selected>Private</option>
+					<option class=" text-gray-700" value={false} selected>Public</option>
 				</select>
 
 				<div class=" text-xs text-gray-400 font-medium">
