@@ -236,6 +236,7 @@ from open_webui.utils.utils import (
     get_current_user,
     get_http_authorization_cred,
     get_verified_user,
+    has_access,
 )
 from open_webui.utils.access_control import has_access
 
@@ -1090,6 +1091,7 @@ app.mount("/api/v1", webui_app)
 webui_app.state.EMBEDDING_FUNCTION = retrieval_app.state.EMBEDDING_FUNCTION
 
 
+@cached(ttl=1)
 async def get_all_base_models():
     open_webui_models = []
     openai_models = []
@@ -1966,6 +1968,9 @@ async def generate_queries(form_data: dict, user=Depends(get_verified_user)):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Query generation is disabled",
             )
+
+    model_list = await get_all_models()
+    models = {model["id"]: model for model in model_list}
 
     model_list = await get_all_models()
     models = {model["id"]: model for model in model_list}
