@@ -96,8 +96,8 @@
 						}
 					}}
 				>
-					<option class=" text-gray-700" value={true} selected>Private</option>
-					<option class=" text-gray-700" value={false} selected>Public</option>
+					<option class=" text-gray-700" value="private" selected>Private</option>
+					<option class=" text-gray-700" value="public" selected>Public</option>
 				</select>
 
 				<div class=" text-xs text-gray-400 font-medium">
