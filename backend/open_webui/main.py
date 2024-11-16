@@ -1346,6 +1346,12 @@ async def get_base_models(user=Depends(get_admin_user)):
     return {"data": models}
 
 
+@app.get("/api/models/base")
+async def get_base_models(user=Depends(get_admin_user)):
+    models = await get_all_base_models()
+    return {"data": models}
+
+
 @app.post("/api/chat/completions")
 async def generate_chat_completions(
     form_data: dict, user=Depends(get_verified_user), bypass_filter: bool = False

@@ -19,6 +19,7 @@ export const getModels = async (token: string = '', base: boolean = false) => {
 			console.log(err);
 			return null;
 		});
+	
 
 	if (error) {
 		throw error;
