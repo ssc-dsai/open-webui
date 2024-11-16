@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	import Plus from '$lib/components/icons/Plus.svelte';
 	import { getContext, onMount } from 'svelte';
 
 	const i18n = getContext('i18n');

@@ -1444,10 +1444,6 @@ async def generate_chat_completions(
                 "selected_model_id": selected_model_id,
             }
 
-    if model_id.startswith("open-webui."):
-        model_id = model_id[len("open-webui.") :]
-        form_data["model"] = model_id
-
     if model.get("pipe"):
         # Below does not require bypass_filter because this is the only route the uses this function and it is already bypassing the filter
         return await generate_function_chat_completion(
