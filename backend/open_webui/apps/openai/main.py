@@ -366,6 +366,7 @@ async def get_models(url_idx: Optional[int] = None, user=Depends(get_verified_us
         headers = {}
         headers["Authorization"] = f"Bearer {key}"
         headers["Content-Type"] = "application/json"
+
         if ENABLE_FORWARD_USER_INFO_HEADERS:
             headers["X-OpenWebUI-User-Name"] = user.name
             headers["X-OpenWebUI-User-Id"] = user.id
@@ -506,16 +507,6 @@ async def generate_chat_completion(
         del payload["metadata"]
 
     model_id = form_data.get("model")
-
-    # TODO: Check User Group and Filter Models
-    # if not bypass_filter:
-    #     if app.state.config.ENABLE_MODEL_FILTER:
-    #         if user.role == "user" and model_id not in app.state.config.MODEL_FILTER_LIST:
-    #             raise HTTPException(
-    #                 status_code=403,
-    #                 detail="Model not found",
-    #             )
-
     model_info = Models.get_model_by_id(model_id)
 
     # Check model info and override the payload
