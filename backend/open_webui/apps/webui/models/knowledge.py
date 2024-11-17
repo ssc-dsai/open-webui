@@ -175,6 +175,17 @@ class KnowledgeTable:
             or has_access(user_id, permission, knowledge_base.access_control)
         ]
 
+    def get_knowledge_bases_by_user_id(
+        self, user_id: str, permission: str = "write"
+    ) -> list[KnowledgeModel]:
+        knowledge_bases = self.get_knowledge_bases()
+        return [
+            knowledge_base
+            for knowledge_base in knowledge_bases
+            if knowledge_base.user_id == user_id
+            or has_access(user_id, permission, knowledge_base.access_control)
+        ]
+
     def get_knowledge_by_id(self, id: str) -> Optional[KnowledgeModel]:
         try:
             with get_db() as db:
