@@ -229,6 +229,8 @@
 		dragged = false;
 	};
 
+	let dropzoneElement;
+
 	onMount(async () => {
 		loaded = true;
 
@@ -262,6 +264,10 @@
 	});
 </script>
 
+<div
+	class="absolute top-0 bottom-0 left-0 right-0 w-full h-full touch-none pointer-events-none"
+	bind:this={dropzoneElement}
+></div>
 <FilesOverlay show={dragged} />
 
 {#if loaded}
