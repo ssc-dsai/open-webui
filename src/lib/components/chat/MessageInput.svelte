@@ -34,7 +34,6 @@
 	import Commands from './MessageInput/Commands.svelte';
 	import XMark from '../icons/XMark.svelte';
 	import RichTextInput from '../common/RichTextInput.svelte';
-	import { getTools } from '$lib/apis/tools';
 
 	const i18n = getContext('i18n');
 
