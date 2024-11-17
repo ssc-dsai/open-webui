@@ -51,6 +51,7 @@
 
 	let tools = [];
 	let filteredItems = [];
+
 	$: filteredItems = tools.filter(
 		(t) =>
 			query === '' ||
