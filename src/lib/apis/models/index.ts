@@ -93,8 +93,6 @@ export const getBaseModels = async (token: string = '') => {
 	return res;
 };
 
-
-
 export const createNewModel = async (token: string, model: object) => {
 	let error = null;
 
