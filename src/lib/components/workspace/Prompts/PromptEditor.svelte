@@ -163,12 +163,6 @@
 			</div>
 		</div>
 
-		<div class="mt-2">
-			<div class="px-3 py-2 bg-gray-50 dark:bg-gray-950 rounded-lg">
-				<AccessControl bind:accessControl />
-			</div>
-		</div>
-
 		<div class="my-4 flex justify-end pb-20">
 			<button
 				class=" text-sm w-full lg:w-fit px-4 py-2 transition rounded-lg {loading
