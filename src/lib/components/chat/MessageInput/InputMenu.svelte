@@ -12,7 +12,6 @@
 	import Switch from '$lib/components/common/Switch.svelte';
 	import GlobeAltSolid from '$lib/components/icons/GlobeAltSolid.svelte';
 	import WrenchSolid from '$lib/components/icons/WrenchSolid.svelte';
-	import { getTools } from '$lib/apis/tools';
 
 	const i18n = getContext('i18n');
 
@@ -29,12 +28,7 @@
 		init();
 	}
 
-	$: if (tools) {
-		selectedToolIds = Object.keys(tools).filter((toolId) => tools[toolId]?.enabled ?? false);
-	}
-
 	const init = async () => {
-		console.log('init');
 		if ($_tools === null) {
 			await _tools.set(await getTools(localStorage.token));
 		}
