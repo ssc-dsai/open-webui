@@ -660,8 +660,11 @@ class ChatCompletionMiddleware(BaseHTTPMiddleware):
 
         model_info = Models.get_model_by_id(model["id"])
         if user.role == "user":
-            if model_info and not has_access(
-                user.id, type="read", access_control=model_info.access_control
+            if model_info and not (
+                user.id == model_info.user_id
+                or has_access(
+                    user.id, type="read", access_control=model_info.access_control
+                )
             ):
                 return JSONResponse(
                     status_code=status.HTTP_403_FORBIDDEN,
@@ -1209,7 +1212,7 @@ async def get_models(user=Depends(get_verified_user)):
         for model in models:
             model_info = Models.get_model_by_id(model["id"])
             if model_info:
-                if has_access(
+                if user.id == model_info.user_id or has_access(
                     user.id, type="read", access_control=model_info.access_control
                 ):
                     filtered_models.append(model)
@@ -1247,8 +1250,11 @@ async def generate_chat_completions(
     # Check if user has access to the model
     if user.role == "user":
         model_info = Models.get_model_by_id(model_id)
-        if not has_access(
-            user.id, type="read", access_control=model_info.access_control
+        if not (
+            user.id == model_info.user_id
+            or has_access(
+                user.id, type="read", access_control=model_info.access_control
+            )
         ):
             raise HTTPException(
                 status_code=403,
