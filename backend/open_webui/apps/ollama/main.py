@@ -352,22 +352,21 @@ async def get_ollama_tags(
                 status_code=r.status_code if r else 500,
                 detail=error_detail,
             )
-        
+
     if user.role == "user":
         # Filter models based on user access control
         filtered_models = []
         for model in models.get("models", []):
             model_info = Models.get_model_by_id(model["model"])
             if model_info:
-                if has_access(
+                if user.id == model_info.user_id or has_access(
                     user.id, type="read", access_control=model_info.access_control
                 ):
                     filtered_models.append(model)
             else:
                 filtered_models.append(model)
         models["models"] = filtered_models
-    
-        
+
     return models
 
     if user.role == "user":
@@ -1000,7 +999,6 @@ async def generate_chat_completion(
     if ":" not in payload["model"]:
         payload["model"] = f"{payload['model']}:latest"
 
-
     url = await get_ollama_url(url_idx, payload["model"])
     log.info(f"url: {url}")
     log.debug(f"generate_chat_completion() - 2.payload = {payload}")
@@ -1161,7 +1159,6 @@ async def get_openai_models(
                 status_code=r.status_code if r else 500,
                 detail=error_detail,
             )
-        
 
     if user.role == "user":
         # Filter models based on user access control
@@ -1169,19 +1166,18 @@ async def get_openai_models(
         for model in models:
             model_info = Models.get_model_by_id(model["id"])
             if model_info:
-                if has_access(
+                if user.id == model_info.user_id or has_access(
                     user.id, type="read", access_control=model_info.access_control
                 ):
                     filtered_models.append(model)
             else:
                 filtered_models.append(model)
         models = filtered_models
-        
 
     return {
-            "data": models,
-            "object": "list",
-        }
+        "data": models,
+        "object": "list",
+    }
 
     if user.role == "user":
         # Filter models based on user access control
