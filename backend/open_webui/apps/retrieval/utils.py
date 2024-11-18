@@ -287,13 +287,7 @@ def get_embedding_function(
     if embedding_engine == "":
         return lambda query: embedding_function.encode(query).tolist()
     elif embedding_engine in ["ollama", "openai"]:
-
-        # Wrapper to run the async generate_embeddings synchronously.
-        def sync_generate_embeddings(*args, **kwargs):
-            return asyncio.run(generate_embeddings(*args, **kwargs))
-
-        # Semantic expectation from the original version (using sync wrapper).
-        func = lambda query: sync_generate_embeddings(
+        func = lambda query: generate_embeddings(
             engine=embedding_engine,
             model=embedding_model,
             text=query,
