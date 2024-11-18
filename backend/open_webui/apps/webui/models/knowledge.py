@@ -99,6 +99,11 @@ class KnowledgeResponse(KnowledgeModel):
 class KnowledgeUserResponse(KnowledgeUserModel):
     files: Optional[list[FileMetadataResponse | dict]] = None
 
+class KnowledgeResponse(KnowledgeModel):
+    files: Optional[list[FileMetadataResponse | dict]] = None
+
+
+class KnowledgeUserResponse(KnowledgeUserModel):
     files: Optional[list[FileMetadataResponse | dict]] = None
 
 
@@ -177,7 +182,7 @@ class KnowledgeTable:
 
     def get_knowledge_bases_by_user_id(
         self, user_id: str, permission: str = "write"
-    ) -> list[KnowledgeModel]:
+    ) -> list[KnowledgeUserModel]:
         knowledge_bases = self.get_knowledge_bases()
         return [
             knowledge_base
