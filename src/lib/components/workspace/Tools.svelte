@@ -263,6 +263,18 @@
 									</Tooltip>
 								</div>
 							</div>
+
+							<div class="text-xs text-gray-500 shrink-0">
+								<Tooltip
+									content={tool?.user?.email}
+									className="flex shrink-0"
+									placement="top-start"
+								>
+									{$i18n.t('By {{name}}', {
+										name: capitalizeFirstLetter(tool?.user?.name ?? tool?.user?.email)
+									})}
+								</Tooltip>
+							</div>
 						</div>
 					</div>
 				</a>

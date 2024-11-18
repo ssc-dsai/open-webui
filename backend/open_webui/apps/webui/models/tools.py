@@ -167,7 +167,7 @@ class ToolsTable:
 
     def get_tools_by_user_id(
         self, user_id: str, permission: str = "write"
-    ) -> list[ToolModel]:
+    ) -> list[ToolUserResponse]:
         tools = self.get_tools()
 
         return [
