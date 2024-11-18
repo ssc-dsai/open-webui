@@ -79,7 +79,7 @@ dependencies = [
     "pytube==15.0.0",
     "extract_msg",
     "pydub",
-    "duckduckgo-search~=6.2.13",
+    "duckduckgo-search~=6.3.5",
 
     "docker~=7.1.0",
     "pytest~=8.3.2",
