@@ -144,7 +144,7 @@ class PromptsTable:
 
     def get_prompts_by_user_id(
         self, user_id: str, permission: str = "write"
-    ) -> list[PromptModel]:
+    ) -> list[PromptUserResponse]:
         prompts = self.get_prompts()
 
         return [
