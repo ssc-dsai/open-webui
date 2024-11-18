@@ -363,8 +363,6 @@ async def get_ollama_tags(
                     user.id, type="read", access_control=model_info.access_control
                 ):
                     filtered_models.append(model)
-            else:
-                filtered_models.append(model)
         models["models"] = filtered_models
 
     return models
@@ -1170,8 +1168,6 @@ async def get_openai_models(
                     user.id, type="read", access_control=model_info.access_control
                 ):
                     filtered_models.append(model)
-            else:
-                filtered_models.append(model)
         models = filtered_models
 
     return {
