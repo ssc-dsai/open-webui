@@ -10,7 +10,6 @@ from open_webui.apps.webui.models.users import Users
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import WEBUI_SECRET_KEY
 
-
 from fastapi import Depends, HTTPException, Request, Response, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
@@ -74,10 +73,15 @@ def get_http_authorization_cred(auth_header: str):
     except Exception:
         raise ValueError(ERROR_MESSAGES.INVALID_TOKEN)
 
+def get_api_key_auth_config():
+    from open_webui.config import ENABLE_API_KEY_AUTH
+    return ENABLE_API_KEY_AUTH
+
 
 def get_current_user(
     request: Request,
     auth_token: HTTPAuthorizationCredentials = Depends(bearer_security),
+    api_key_auth_enabled: bool = Depends(get_api_key_auth_config)
 ):
     token = None
 
