@@ -38,6 +38,7 @@
 	let showResetModal = false;
 
 	let selectedModelId = null;
+	let showResetModal = false;
 
 	$: if (models) {
 		filteredModels = models.filter(
