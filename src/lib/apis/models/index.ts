@@ -295,7 +295,6 @@ export const deleteAllModels = async (token: string) => {
 	return res;
 };
 
-
 export const deleteAllModels = async (token: string) => {
 	let error = null;
 
