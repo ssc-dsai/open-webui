@@ -74,6 +74,7 @@ class ChatTitleMessagesForm(BaseModel):
     title: str
     messages: list[dict]
 
+
 class ChatImportForm(ChatForm):
     meta: Optional[dict] = {}
     pinned: Optional[bool] = False

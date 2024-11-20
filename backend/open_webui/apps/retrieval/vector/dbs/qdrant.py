@@ -18,6 +18,7 @@ from open_webui.config import (
     QDRANT_URL,
 )
 
+
 class QdrantClient:
     def __init__(self):
         self.client = Client(
