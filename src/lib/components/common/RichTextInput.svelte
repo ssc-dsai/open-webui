@@ -220,48 +220,6 @@
 		};
 	}
 
-	function handleSpace(state, dispatch) {
-		let { from, to, empty } = state.selection;
-
-		if (dispatch && empty) {
-			let tr = state.tr;
-
-			// Check for any active marks at `from - 1` (the space we just inserted)
-			const storedMarks = state.storedMarks || state.selection.$from.marks();
-
-			const hasBold = storedMarks.some((mark) => mark.type === state.schema.marks.strong);
-			const hasItalic = storedMarks.some((mark) => mark.type === state.schema.marks.em);
-
-			console.log('Stored marks after space:', storedMarks, hasBold, hasItalic);
-
-			// Remove marks from the space character (marks applied to the space character will be marked as false)
-			if (hasBold) {
-				tr = tr.removeMark(from - 1, from, state.schema.marks.strong);
-			}
-			if (hasItalic) {
-				tr = tr.removeMark(from - 1, from, state.schema.marks.em);
-			}
-
-			// Dispatch the resulting transaction to update the editor state
-			dispatch(tr);
-		}
-
-		return true;
-	}
-
-	function toggleMark(markType) {
-		return (state, dispatch) => {
-			const { from, to } = state.selection;
-			if (state.doc.rangeHasMark(from, to, markType)) {
-				if (dispatch) dispatch(state.tr.removeMark(from, to, markType));
-				return true;
-			} else {
-				if (dispatch) dispatch(state.tr.addMark(from, to, markType.create()));
-				return true;
-			}
-		};
-	}
-
 	function isInList(state) {
 		const { $from } = state.selection;
 		return (

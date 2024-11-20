@@ -1,41 +1,5 @@
-<script lang="ts">
-	import fileSaver from 'file-saver';
-	const { saveAs } = fileSaver;
-
-	import { onMount, getContext } from 'svelte';
-	import dayjs from 'dayjs';
-	import relativeTime from 'dayjs/plugin/relativeTime';
-	dayjs.extend(relativeTime);
-
-	import * as ort from 'onnxruntime-web';
-	import { AutoModel, AutoTokenizer } from '@huggingface/transformers';
-
-	const EMBEDDING_MODEL = 'TaylorAI/bge-micro-v2';
-	let tokenizer = null;
-	let model = null;
-
-	import dayjs from 'dayjs';
-	import relativeTime from 'dayjs/plugin/relativeTime';
-	dayjs.extend(relativeTime);
-
-	import * as ort from 'onnxruntime-web';
-	import { AutoModel, AutoTokenizer } from '@huggingface/transformers';
-
-	const embedding_model = 'TaylorAI/bge-micro-v2';
-	let tokenizer = null;
-	let model = null;
-
-	import { models } from '$lib/stores';
-	import { deleteFeedbackById, exportAllFeedbacks, getAllFeedbacks } from '$lib/apis/evaluations';
-
-	import FeedbackMenu from './Evaluations/FeedbackMenu.svelte';
-	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
-	import Tooltip from '../common/Tooltip.svelte';
-	import Badge from '../common/Badge.svelte';
-	import Pagination from '../common/Pagination.svelte';
-	import MagnifyingGlass from '../icons/MagnifyingGlass.svelte';
-	import Share from '../icons/Share.svelte';
-	import CloudArrowUp from '../icons/CloudArrowUp.svelte';
+<script>
+	import { getContext, tick, onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import Leaderboard from './Evaluations/Leaderboard.svelte';
 	import Feedbacks from './Evaluations/Feedbacks.svelte';
