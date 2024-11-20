@@ -658,67 +658,55 @@
 		</div>
 
 		<div class="flex flex-row flex-1 h-full max-h-full pb-2.5">
-			<div
-				class=" {largeScreen
-					? 'flex-shrink-0'
-					: 'flex-1'} flex py-2.5 w-80 rounded-2xl border border-gray-50 dark:border-gray-850"
-			>
-				<div class=" flex flex-col w-full space-x-2 rounded-lg h-full">
-					<div class="w-full h-full flex flex-col">
-						<div class=" px-3">
-							<div class="flex">
-								<div class=" self-center ml-1 mr-3">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 20 20"
-										fill="currentColor"
-										class="w-4 h-4"
-									>
-										<path
-											fill-rule="evenodd"
-											d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-											clip-rule="evenodd"
-										/>
-									</svg>
-								</div>
-								<input
-									class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
-									bind:value={query}
-									placeholder={$i18n.t('Search Collection')}
-									on:focus={() => {
-										selectedFileId = null;
-									}}
-								/>
-
-								<div>
-									<AddContentMenu
-										on:upload={(e) => {
-											if (e.detail.type === 'directory') {
-												uploadDirectoryHandler();
-											} else if (e.detail.type === 'text') {
-												showAddTextContentModal = true;
-											} else {
-												document.getElementById('files-input').click();
-											}
-										}}
-										on:sync={(e) => {
-											showSyncConfirmModal = true;
-										}}
-									/>
-
-									<div>
-										<AddContentMenu
-											on:upload={(e) => {
-												if (e.detail.type === 'directory') {
-													uploadDirectoryHandler();
-												} else if (e.detail.type === 'text') {
-													showAddTextContentModal = true;
-												} else {
-													document.getElementById('files-input').click();
-												}
-											}}
-											on:sync={(e) => {
-												showSyncConfirmModal = true;
+			<PaneGroup direction="horizontal">
+				<Pane
+					bind:pane
+					defaultSize={minSize}
+					collapsible={true}
+					maxSize={50}
+					{minSize}
+					class="h-full"
+					onExpand={() => {
+						showSidepanel = true;
+					}}
+					onCollapse={() => {
+						showSidepanel = false;
+					}}
+				>
+					<div
+						class="{largeScreen ? 'flex-shrink-0' : 'flex-1'}
+						flex
+						py-2
+						rounded-2xl
+						border
+						border-gray-50
+						h-full
+						dark:border-gray-850"
+					>
+						<div class=" flex flex-col w-full space-x-2 rounded-lg h-full">
+							<div class="w-full h-full flex flex-col">
+								<div class=" px-3">
+									<div class="flex py-1">
+										<div class=" self-center ml-1 mr-3">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 20 20"
+												fill="currentColor"
+												class="w-4 h-4"
+											>
+												<path
+													fill-rule="evenodd"
+													d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+													clip-rule="evenodd"
+												/>
+											</svg>
+										</div>
+										<input
+											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
+											bind:value={query}
+											placeholder={$i18n.t('Search Collection')}
+											on:focus={() => {
+												selectedFileId = null;
 											}}
 										/>
 
@@ -771,29 +759,7 @@
 									</div>
 								{/if}
 							</div>
-
-							<hr class=" mt-2 mb-1 border-gray-50 dark:border-gray-850" />
 						</div>
-
-						{#if filteredItems.length > 0}
-							<div class=" flex overflow-y-auto h-full w-full scrollbar-hidden text-xs">
-								<Files
-									files={filteredItems}
-									{selectedFileId}
-									on:click={(e) => {
-										selectedFileId = selectedFileId === e.detail ? null : e.detail;
-									}}
-									on:delete={(e) => {
-										console.log(e.detail);
-
-										selectedFileId = null;
-										deleteFileHandler(e.detail);
-									}}
-								/>
-							</div>
-						{:else}
-							<div class="m-auto text-gray-500 text-xs">{$i18n.t('No content found')}</div>
-						{/if}
 					</div>
 				</Pane>
 
@@ -910,53 +876,7 @@
 								</div>
 							</div>
 						</div>
-					{:else}
-						<div class="m-auto pb-32">
-							<div>
-								<div class=" flex w-full mt-1 mb-3.5">
-									<div class="flex-1">
-										<div class="flex items-center justify-between w-full px-0.5 mb-1">
-											<div class="w-full">
-												<input
-													type="text"
-													class="text-center w-full font-medium text-3xl font-primary bg-transparent outline-none"
-													bind:value={knowledge.name}
-													on:input={() => {
-														changeDebounceHandler();
-													}}
-												/>
-											</svg>
-										</div>
-										<input
-											class=" w-full text-sm pr-4 py-1 rounded-r-xl outline-none bg-transparent"
-											bind:value={query}
-											placeholder={$i18n.t('Search Collection')}
-											on:focus={() => {
-												selectedFileId = null;
-											}}
-										/>
-
-										<div>
-											<AddContentMenu
-												on:upload={(e) => {
-													if (e.detail.type === 'directory') {
-														uploadDirectoryHandler();
-													} else if (e.detail.type === 'text') {
-														showAddTextContentModal = true;
-													} else {
-														document.getElementById('files-input').click();
-													}
-												}}
-												on:sync={(e) => {
-													showSyncConfirmModal = true;
-												}}
-											/>
-										</div>
-									</div>
-								</div>
-							</div>
-						{/if}
-					</div>
+					</Drawer>
 				{/if}
 			</PaneGroup>
 		</div>

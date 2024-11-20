@@ -61,8 +61,6 @@
 	let showDropdown = false;
 	let showPinnedChat = true;
 
-	let showPinnedChat = true;
-
 	// Pagination variables
 	let chatListLoading = false;
 	let allChatsLoaded = false;
@@ -536,20 +534,6 @@
 			</div>
 		</div>
 
-			<div class="absolute z-40 right-3.5 top-1">
-				<Tooltip content={$i18n.t('New folder')}>
-					<button
-						class="p-1 rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900 transition"
-						on:click={() => {
-							createFolder();
-						}}
-					>
-						<Plus />
-					</button>
-				</Tooltip>
-			</div>
-		</div>
-
 		<div
 			class="relative flex flex-col flex-1 overflow-y-auto {$temporaryChatEnabled
 				? 'opacity-20'
@@ -620,9 +604,6 @@
 									}}
 									on:unselect={() => {
 										selectedChatId = null;
-									}}
-									on:change={async () => {
-										initChatList();
 									}}
 									on:change={async () => {
 										initChatList();
@@ -705,21 +686,6 @@
 							if (res) {
 								await initFolders();
 							}
-						} else if (type === 'folder') {
-							if (folders[id].parent_id === null) {
-								return;
-							}
-
-							const res = await updateFolderParentIdById(localStorage.token, id, null).catch(
-								(error) => {
-									toast.error(error);
-									return null;
-								}
-							);
-
-							if (res) {
-								await initFolders();
-							}
 						}
 					}}
 				>
@@ -766,9 +732,6 @@
 									}}
 									on:unselect={() => {
 										selectedChatId = null;
-									}}
-									on:change={async () => {
-										initChatList();
 									}}
 									on:change={async () => {
 										initChatList();
