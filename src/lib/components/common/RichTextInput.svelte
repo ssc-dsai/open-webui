@@ -276,8 +276,7 @@
 						return false;
 					}
 				}
-			},
-			attributes: { id }
+			}
 		});
 
 		selectTemplate();
