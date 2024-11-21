@@ -410,7 +410,7 @@
 							</div>
 						{/if}
 
-						{#if $config?.features.enable_ldap}
+						{#if $config?.features.enable_ldap && $config?.features.enable_login_form}
 							<div class="mt-2">
 								<button
 									class="flex justify-center items-center text-xs w-full text-center underline"
