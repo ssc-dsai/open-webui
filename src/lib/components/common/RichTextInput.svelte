@@ -282,6 +282,10 @@
 		return liftListItem(schema.nodes.list_item)(state, dispatch);
 	}
 
+	const options = {
+		throwOnError: false
+	};
+
 	// Function to find the next template in the document
 	function findNextTemplate(doc, from = 0) {
 		const patterns = [
@@ -359,6 +363,7 @@
 	};
 
 	onMount(() => {
+		const content = marked.parse(value);
 		editor = new Editor({
 			element: element,
 			extensions: [
@@ -370,7 +375,7 @@
 				Typography,
 				Placeholder.configure({ placeholder })
 			],
-			content: marked.parse(value),
+			content: content,
 			autofocus: true,
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
