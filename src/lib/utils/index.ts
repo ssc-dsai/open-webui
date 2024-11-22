@@ -14,6 +14,7 @@ export const replaceTokens = (content, sourceIds, char, user) => {
 	const videoIdToken = /{{VIDEO_FILE_ID_([a-f0-9-]+)}}/gi; // Regex to capture the video ID
 	const htmlIdToken = /{{HTML_FILE_ID_([a-f0-9-]+)}}/gi; // Regex to capture the HTML ID
 
+
 	// Replace {{char}} if char is provided
 	if (char !== undefined && char !== null) {
 		content = content.replace(charToken, char);
