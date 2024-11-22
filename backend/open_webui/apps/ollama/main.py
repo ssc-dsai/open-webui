@@ -9,6 +9,8 @@ from typing import Optional, Union
 from urllib.parse import urlparse
 
 import aiohttp
+from aiocache import cached
+
 import requests
 from open_webui.apps.webui.models.models import Models
 from open_webui.config import (
@@ -254,6 +256,7 @@ def merge_models_lists(model_lists):
     return list(merged_models.values())
 
 
+@cached(ttl=3)
 async def get_all_models():
     log.info("get_all_models()")
     if app.state.config.ENABLE_OLLAMA_API:
@@ -292,8 +295,6 @@ async def get_all_models():
                 if prefix_id:
                     for model in response.get("models", []):
                         model["model"] = f"{prefix_id}.{model['model']}"
-
-        print(responses)
 
         models = {
             "models": merge_models_lists(
