@@ -645,7 +645,6 @@ async def chat_completion_files_handler(
         if len(queries) == 0:
             queries = [get_last_user_message(body["messages"])]
 
-
         sources = get_sources_from_files(
             files=files,
             queries=queries,
@@ -1078,7 +1077,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 @app.middleware("http")
 async def commit_session_after_request(request: Request, call_next):
     response = await call_next(request)
-    #log.debug("Commit session after request")
+    # log.debug("Commit session after request")
     Session.commit()
     return response
 
@@ -1332,7 +1331,9 @@ async def get_models(user=Depends(get_verified_user)):
                     filtered_models.append(model)
         models = filtered_models
 
-    log.debug(f"/api/models returned filtered models accessible to the user: {json.dumps([model['id'] for model in models])}")
+    log.debug(
+        f"/api/models returned filtered models accessible to the user: {json.dumps([model['id'] for model in models])}"
+    )
 
     return {"data": models}
 
@@ -1856,7 +1857,9 @@ async def generate_title(form_data: dict, user=Depends(get_verified_user)):
         models,
     )
 
-    log.debug(f"generating chat title using model {task_model_id} for user {user.email} ")
+    log.debug(
+        f"generating chat title using model {task_model_id} for user {user.email} "
+    )
 
     if app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE != "":
         template = app.state.config.TITLE_GENERATION_PROMPT_TEMPLATE
@@ -1896,10 +1899,10 @@ Artificial Intelligence in Healthcare
             }
         ),
         "metadata": {
-                "task": str(TASKS.TITLE_GENERATION), 
-                "task_body": form_data,
-                "chat_id": form_data.get("chat_id", None)
-                },
+            "task": str(TASKS.TITLE_GENERATION),
+            "task_body": form_data,
+            "chat_id": form_data.get("chat_id", None),
+        },
     }
 
     # Handle pipeline filters
@@ -1949,8 +1952,10 @@ async def generate_chat_tags(form_data: dict, user=Depends(get_verified_user)):
         app.state.config.TASK_MODEL_EXTERNAL,
         models,
     )
-    
-    log.debug(f"generating chat tags using model {task_model_id} for user {user.email} ")
+
+    log.debug(
+        f"generating chat tags using model {task_model_id} for user {user.email} "
+    )
 
     if app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE != "":
         template = app.state.config.TAGS_GENERATION_PROMPT_TEMPLATE
@@ -1982,10 +1987,10 @@ JSON format: { "tags": ["tag1", "tag2", "tag3"] }
         "messages": [{"role": "user", "content": content}],
         "stream": False,
         "metadata": {
-            "task": str(TASKS.TAGS_GENERATION), 
+            "task": str(TASKS.TAGS_GENERATION),
             "task_body": form_data,
-            "chat_id": form_data.get("chat_id", None)
-            }
+            "chat_id": form_data.get("chat_id", None),
+        },
     }
 
     # Handle pipeline filters
@@ -2049,8 +2054,10 @@ async def generate_queries(form_data: dict, user=Depends(get_verified_user)):
         app.state.config.TASK_MODEL_EXTERNAL,
         models,
     )
-    
-    log.debug(f"generating {type} queries using model {task_model_id} for user {user.email}")
+
+    log.debug(
+        f"generating {type} queries using model {task_model_id} for user {user.email}"
+    )
 
     if app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE != "":
         template = app.state.config.QUERY_GENERATION_PROMPT_TEMPLATE
@@ -2065,7 +2072,11 @@ async def generate_queries(form_data: dict, user=Depends(get_verified_user)):
         "model": task_model_id,
         "messages": [{"role": "user", "content": content}],
         "stream": False,
-        "metadata": {"task": str(TASKS.QUERY_GENERATION), "task_body": form_data, "chat_id": form_data.get("chat_id", None)},
+        "metadata": {
+            "task": str(TASKS.QUERY_GENERATION),
+            "task_body": form_data,
+            "chat_id": form_data.get("chat_id", None),
+        },
     }
 
     # Handle pipeline filters
@@ -2182,7 +2193,7 @@ async def generate_moa_response(form_data: dict, user=Depends(get_verified_user)
         app.state.config.TASK_MODEL_EXTERNAL,
         models,
     )
-   
+
     log.debug(f"generating MOA model {task_model_id} for user {user.email} ")
 
     template = """You have been provided with a set of responses from various models to the latest user query: "{{prompt}}"
