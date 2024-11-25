@@ -1,6 +1,7 @@
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
+As members, contributors, and leaders of this community, we pledge to make participation in our open-source project a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 As members, contributors, and leaders of this community, we pledge to make participation in our open-source project a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
@@ -24,6 +25,13 @@ Examples of behavior that contribute to a positive and professional community in
 - **Focusing on shared goals.** Collaborate in ways that prioritize the health, success, and sustainability of the community over individual agendas.
 
 Examples of unacceptable behavior include:
+- The use of discriminatory, demeaning, or sexualized language or behavior.
+- Personal attacks, derogatory comments, trolling, or inflammatory political or ideological arguments.
+- Harassment, intimidation, or any behavior intended to create a hostile, uncomfortable, or unsafe environment.
+- Publishing others' private information (e.g., physical or email addresses) without explicit permission.
+- **Entitlement, demand, or aggression toward contributors.** Volunteers are under no obligation to provide immediate or personalized support. Rude or dismissive behavior will not be tolerated.
+- **Unproductive or destructive behavior.** This includes venting frustration as hostility ("tantrums"), hypercriticism, attention-seeking negativity, or anything that distracts from the project's goals.
+- **Spamming and promotional exploitation.** Sharing irrelevant product promotions or self-promotion in the community is not allowed unless it directly contributes value to the discussion.
 
 - The use of discriminatory, demeaning, or sexualized language or behavior.
 - Personal attacks, derogatory comments, trolling, or inflammatory political or ideological arguments.
@@ -49,6 +57,7 @@ We employ this approach to ensure that unproductive or disruptive behavior does 
 Community leaders are responsible for upholding and enforcing these standards. They are empowered to take **immediate and appropriate action** to address any behaviors they deem unacceptable under this Code of Conduct. These actions are taken with the goal of protecting the community and preserving its safe, positive, and productive environment.
 
 ## Scope
+This Code of Conduct applies to all community spaces, including forums, repositories, social media accounts, and in-person events. It also applies when an individual represents the community in public settings, such as conferences or official communications.
 
 This Code of Conduct applies to all community spaces, including forums, repositories, social media accounts, and in-person events. It also applies when an individual represents the community in public settings, such as conferences or official communications.
 
@@ -61,6 +70,8 @@ Instances of unacceptable behavior can be reported to the leadership team at **h
 All community leaders are required to uphold confidentiality and impartiality when addressing reports of violations.
 
 ## Enforcement Guidelines
+### Ban
+**Community Impact**: Community leaders will issue a ban to any participant whose behavior is deemed unacceptable according to this Code of Conduct. Bans are enforced immediately and without prior notice.
 
 ### Ban
 
@@ -86,6 +97,8 @@ By enforcing a zero-tolerance policy, we ensure that the community remains a saf
 Our expectations are clear, and our enforcement reflects our commitment to this project's long-term success.
 
 ## Attribution
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.0, available at  
+https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.  
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.0, available at  
 https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
