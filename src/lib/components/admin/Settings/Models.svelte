@@ -37,9 +37,6 @@
 	let selectedModelId = null;
 	let showResetModal = false;
 
-	let selectedModelId = null;
-	let showResetModal = false;
-
 	$: if (models) {
 		filteredModels = models.filter(
 			(m) => searchValue === '' || m.name.toLowerCase().includes(searchValue.toLowerCase())

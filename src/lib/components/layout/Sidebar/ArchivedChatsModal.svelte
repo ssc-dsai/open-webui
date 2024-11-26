@@ -58,21 +58,6 @@
 		chats = await getArchivedChatList(localStorage.token);
 	};
 
-	const exportChatsHandler = async () => {
-		const chats = await getAllArchivedChats(localStorage.token);
-		let blob = new Blob([JSON.stringify(chats)], {
-			type: 'application/json'
-		});
-		saveAs(blob, `${$i18n.t('archived-chat-export')}-${Date.now()}.json`);
-	};
-
-	const unarchiveAllHandler = async () => {
-		for (const chat of chats) {
-			await archiveChatById(localStorage.token, chat.id);
-		}
-		chats = await getArchivedChatList(localStorage.token);
-	};
-
 	$: if (show) {
 		(async () => {
 			chats = await getArchivedChatList(localStorage.token);

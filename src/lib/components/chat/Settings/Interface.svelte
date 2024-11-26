@@ -41,10 +41,6 @@
 	let showUpdateToast = true;
 	let showChangelog = true;
 
-	// Admin - Show Update Available Toast
-	let showUpdateToast = true;
-	let showChangelog = true;
-
 	let showEmojiInCall = false;
 	let voiceInterruption = false;
 	let hapticFeedback = false;
