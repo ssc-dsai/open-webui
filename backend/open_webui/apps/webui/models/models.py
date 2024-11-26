@@ -18,7 +18,6 @@ from sqlalchemy import BigInteger, Column, Text, JSON, Boolean
 from open_webui.utils.access_control import has_access
 
 
-
 from open_webui.utils.utils import has_access
 
 
