@@ -188,12 +188,6 @@
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'signin'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else if $config?.onboarding ?? false}
-										{$i18n.t(`Get started with {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else if mode === 'ldap'}
-										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else if mode === 'signin'}
-										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else}
 										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{/if}
@@ -410,20 +404,7 @@
 							</div>
 						{/if}
 
-								{#if showSwitchButtonForSignInForm}
-									<button
-										class="flex items-center px-6 border-2 dark:border-gray-800 duration-300 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 w-full rounded-2xl dark:text-white text-sm py-3 transition"
-										on:click={() => {
-											if (mode === 'ldap')
-												mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
-											else mode = 'ldap';
-										}}
-									>
-								</button>
-							</div>
-						{/if}
-
-						{#if $config?.features.enable_ldap}
+						{#if $config?.features.enable_ldap && $config?.features.enable_login_form}
 							<div class="mt-2">
 								<button
 									class="flex justify-center items-center text-xs w-full text-center underline"

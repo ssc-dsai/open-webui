@@ -43,7 +43,6 @@
 	}
 </script>
 
-<!-- LLM failed to help successfully for this tooltip -->
 <div class=" space-y-1 text-xs pb-safe-bottom">
 	<div>
 		<Tooltip
@@ -1035,78 +1034,6 @@
 				)}
 				placement="top-start"
 				className="inline-tooltip"
-			>
-				<div class="flex w-full justify-between">
-					<div class=" self-center text-xs font-medium">
-						{$i18n.t('num_thread (Ollama)')}
-					</div>
-
-					<button
-						class="p-1 px-3 text-xs flex rounded transition flex-shrink-0 outline-none"
-						type="button"
-						on:click={() => {
-							params.num_thread = (params?.num_thread ?? null) === null ? 2 : null;
-						}}
-					>
-						{#if (params?.num_thread ?? null) === null}
-							<span class="ml-2 self-center">{$i18n.t('Default')}</span>
-						{:else}
-							<span class="ml-2 self-center">{$i18n.t('Custom')}</span>
-						{/if}
-					</button>
-				</div>
-			</Tooltip>
-
-			<button
-				class="p-1 px-3 text-xs flex rounded transition flex-shrink-0 outline-none"
-				type="button"
-				on:click={() => {
-					params.num_thread = (params?.num_thread ?? null) === null ? 2 : null;
-				}}
-			>
-				{#if (params?.num_thread ?? null) === null}
-					<span class="ml-2 self-center">{$i18n.t('Default')}</span>
-				{:else}
-					<span class="ml-2 self-center">{$i18n.t('Custom')}</span>
-				{/if}
-			</button>
-		</div>
-
-		<div class=" py-0.5 w-full justify-between">
-			<Tooltip
-				content={$i18n.t(
-					'Set the number of GPU devices used for computation. This option controls how many GPU devices (if available) are used to process incoming requests. Increasing this value can significantly improve performance for models that are optimized for GPU acceleration but may also consume more power and GPU resources.'
-				)}
-				placement="top-start"
-				className="inline-tooltip"
-			>
-				<div class="flex w-full justify-between">
-					<div class=" self-center text-xs font-medium">
-						{$i18n.t('num_gpu (Ollama)')}
-					</div>
-
-					<button
-						class="p-1 px-3 text-xs flex rounded transition flex-shrink-0 outline-none"
-						type="button"
-						on:click={() => {
-							params.num_gpu = (params?.num_gpu ?? null) === null ? 0 : null;
-						}}
-					>
-						{#if (params?.num_gpu ?? null) === null}
-							<span class="ml-2 self-center">{$i18n.t('Default')}</span>
-						{:else}
-							<span class="ml-2 self-center">{$i18n.t('Custom')}</span>
-						{/if}
-					</button>
-				</div>
-			</Tooltip>
-
-			<button
-				class="p-1 px-3 text-xs flex rounded transition flex-shrink-0 outline-none"
-				type="button"
-				on:click={() => {
-					params.num_gpu = (params?.num_gpu ?? null) === null ? 0 : null;
-				}}
 			>
 				<div class="flex w-full justify-between">
 					<div class=" self-center text-xs font-medium">
