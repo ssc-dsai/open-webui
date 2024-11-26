@@ -293,12 +293,12 @@ async def speech(request: Request, user=Depends(get_verified_user)):
                 async with session.post(
                     url=f"{app.state.config.TTS_OPENAI_API_BASE_URL}/audio/speech",
                     data=body,
-                    headers=headers
+                    headers=headers,
                 ) as r:
                     r.raise_for_status()
                     async with aiofiles.open(file_path, "wb") as f:
                         await f.write(await r.read())
-                    
+
                     async with aiofiles.open(file_body_path, "w") as f:
                         await f.write(json.dumps(json.loads(body.decode("utf-8"))))
 
@@ -316,7 +316,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
                 error_detail = f"External: {e}"
 
             raise HTTPException(
-                status_code=getattr(r, 'status', 500),
+                status_code=getattr(r, "status", 500),
                 detail=error_detail,
             )
 
@@ -352,7 +352,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
                     r.raise_for_status()
                     async with aiofiles.open(file_path, "wb") as f:
                         await f.write(await r.read())
-                    
+
                     async with aiofiles.open(file_body_path, "w") as f:
                         await f.write(json.dumps(json.loads(body.decode("utf-8"))))
 
@@ -370,7 +370,7 @@ async def speech(request: Request, user=Depends(get_verified_user)):
                 error_detail = f"External: {e}"
 
             raise HTTPException(
-                status_code=getattr(r, 'status', 500),
+                status_code=getattr(r, "status", 500),
                 detail=error_detail,
             )
 
