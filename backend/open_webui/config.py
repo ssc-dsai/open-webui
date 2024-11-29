@@ -790,7 +790,10 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
             "lang": "en-GB",
         },
         {
-            "title": ["Explain options trading", "if I'm familiar with buying and selling stocks"],
+            "title": [
+                "Explain options trading",
+                "if I'm familiar with buying and selling stocks",
+            ],
             "content": "Explain options trading in simple terms if I'm familiar with buying and selling stocks.",
             "lang": "en-GB",
         },
@@ -800,12 +803,18 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
             "lang": "en-GB",
         },
         {
-            "title": ["Aidez-moi à étudier", "le vocabulaire pour un examen d'entrée au CÉGEP"],
+            "title": [
+                "Aidez-moi à étudier",
+                "le vocabulaire pour un examen d'entrée au CÉGEP",
+            ],
             "content": "Aidez-moi à étudier le vocabulaire : écrivez une phrase avec un blanc à remplir, et je vais essayer de choisir la bonne option.",
             "lang": "fr-CA",
         },
         {
-            "title": ["Donnez-moi des idées", "pour ce que je peux faire avec les dessins de mes enfants"],
+            "title": [
+                "Donnez-moi des idées",
+                "pour ce que je peux faire avec les dessins de mes enfants",
+            ],
             "content": "Quelles sont 5 idées créatives pour utiliser les dessins de mes enfants ? Je ne veux pas les jeter, mais ils prennent beaucoup de place.",
             "lang": "fr-CA",
         },
@@ -815,12 +824,18 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
             "lang": "fr-CA",
         },
         {
-            "title": ["Montrez-moi un extrait de code", "pour un en-tête fixe sur un site web"],
+            "title": [
+                "Montrez-moi un extrait de code",
+                "pour un en-tête fixe sur un site web",
+            ],
             "content": "Montrez-moi un extrait de code pour un en-tête fixe sur un site web en CSS et JavaScript.",
             "lang": "fr-CA",
         },
         {
-            "title": ["Expliquez les options de trading", "si je connais l'achat et la vente d'actions"],
+            "title": [
+                "Expliquez les options de trading",
+                "si je connais l'achat et la vente d'actions",
+            ],
             "content": "Expliquez les options de trading en termes simples, sachant que je suis familier avec l'achat et la vente d'actions.",
             "lang": "fr-CA",
         },
@@ -830,7 +845,10 @@ DEFAULT_PROMPT_SUGGESTIONS = PersistentConfig(
             "lang": "fr-CA",
         },
         {
-            "title": ["Vérification grammaticale", "réécrivez pour une meilleure clarté"],
+            "title": [
+                "Vérification grammaticale",
+                "réécrivez pour une meilleure clarté",
+            ],
             "content": 'Vérifiez la grammaire et la clarté de cette phrase : "[phrase]". Réécrivez-la pour une meilleure clarté tout en conservant son sens original.',
             "lang": "fr-CA",
         },
