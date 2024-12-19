@@ -15,6 +15,7 @@ from starlette.responses import RedirectResponse
 from open_webui.apps.webui.models.auths import Auths
 from open_webui.apps.webui.models.users import Users
 from open_webui.config import (
+    BASE_URL,
     DEFAULT_USER_ROLE,
     ENABLE_OAUTH_SIGNUP,
     OAUTH_MERGE_ACCOUNTS_BY_EMAIL,
@@ -254,7 +255,8 @@ class OAuthManager:
         )
 
         # Redirect back to the frontend with the JWT token
-        redirect_url = f"{request.base_url}auth#token={jwt_token}"
+        base_url = BASE_URL if BASE_URL != "" else request.base_url
+        redirect_url = f"{base_url}auth#token={jwt_token}"
         return RedirectResponse(url=redirect_url)
 
 
